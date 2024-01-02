@@ -1,3 +1,7 @@
+# にゃんぱすー
+# N Y A N P A S S
+
+
 ### 自己紹介
 　Let`s note買ってarchLinux入れて山陽本線の景色眺めながら作業したい。
 
