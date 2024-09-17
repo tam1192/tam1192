@@ -1,9 +1,13 @@
-# いーつーもひーとーりーでーあーるいーてーたー
-# r o c k e t
+# とむとじぇりーの犬回は神回が多い
+# The times when there are dogs in Tom&jerry are god times.
 
 
 ### 自己紹介
-　モウタスカラナイセンセイ
+ADWGroupとITRC運営してます。
+
+いつも使ってるリポジトリ
+https://mirror.hashy0917.net/
+tamkame123@outlook.com
 
 ## リンクとか
 [![城下町 Discord](https://img.shields.io/discord/882784624588238848?color=57F287&label=%E5%9F%8E%E4%B8%8B%E7%94%BA&style=flat-square&logo=discord)](https://discord.gg/8RmBezF9Zb)
