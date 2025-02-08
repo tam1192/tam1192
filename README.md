@@ -1,5 +1,4 @@
-# とむとじぇりーの犬回は神回が多い
-# The times when there are dogs in Tom&jerry are god times.
+# 😤🔊
 
 
 ### 自己紹介
