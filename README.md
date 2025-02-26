@@ -1,5 +1,6 @@
-# 日記9750
-ADWGroupとITRC運営してます。
+# [日記9750](https://tam1192.github.io/notepad.md/)
+ADWGroupとITRC運営してます。  
+[Markdown.md](https://tam1192.github.io/notepad.md/) に詳細プロフィールとか書いてます。
 
 ## 趣味
 - ほぼ無計画書き
