@@ -1,4 +1,4 @@
-# ceph-monってなに？
+# [ceph-monってなに？](https://qiita.com/tamkame123/items/3ec535e0ee2eaf34026f)
 ceph-mon
 私もこの記事を書いている時点ではあまりよくわかってないんですが、
 わかる範囲で例えるなら「図書館司書」
