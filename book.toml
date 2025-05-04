@@ -6,5 +6,5 @@ src = "src"
 title = "Notepad.md"
 
   [output.html]
-  additional-css = ["theme/pagetoc.css"]
-  additional-js = ["theme/pagetoc.js"]
+  additional-css = ["plugins/mdBook-pagetoc/theme/pagetoc.css"]
+  additional-js = ["plugins/mdBook-pagetoc/theme/pagetoc.js"]
