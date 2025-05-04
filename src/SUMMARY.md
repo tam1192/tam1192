@@ -6,3 +6,6 @@
 
 # サーバーネタ
 - [Ceph-monって何？](./ceph/bm001_ceph-monってなに？/Readme.md)
+
+# 自由記述型
+- [検証するならtmp使えや](./freewrite/tmptukaeya.md)
