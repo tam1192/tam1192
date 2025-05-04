@@ -1,0 +1,3 @@
+[submodule "plugins/mdBook-pagetoc"]
+	path = plugins/mdBook-pagetoc
+	url = https://github.com/JorelAli/mdBook-pagetoc.git
