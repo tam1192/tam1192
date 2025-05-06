@@ -23,3 +23,8 @@ https://mirror.hashy0917.net/
 - [![ニコニコ動画](https://img.shields.io/badge/niconico-tamkame123-%23C0C0C0?style=flat-square&link=https%3A%2F%2Fwww.nicovideo.jp%2Fuser%2F83709685)](https://www.nicovideo.jp/user/83709685)  
   ボイスロイド劇場が好きです。　一人称劇場大好き。  
   ASMR毎日お世話になってたら耳ガアアになったので、ほどほどに癒されてます。  
+- [![GitHub followers](https://img.shields.io/github/followers/tam1192?style=flat-square)](https://github.com/tam1192)  
+  githubアカウントです。
+- [![qiita](https://img.shields.io/badge/qiita-green?style=flat-square&link=https%3A%2F%2Fqiita.com%2Ftamkame123)](https://qiita.com/tamkame123)  
+  qiitaでも書いてます。
+
