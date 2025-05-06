@@ -30,8 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Checkout submodules
-        run: git submodule update --init --recursive
       - name: Install mdBook
         run: cargo install --version 0.4.49 mdbook
       - name: Setup Pages
