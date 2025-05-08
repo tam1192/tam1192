@@ -30,8 +30,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install mdBook
-        run: cargo install --version 0.4.49 mdbook
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v2
+        with:
+          mdbook-version: 'latest'
       - name: Install plugins for mdbook-alerts
         run: cargo install mdbook-alerts
       - name: Setup Pages
