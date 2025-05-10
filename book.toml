@@ -9,4 +9,5 @@ title = "Notepad.md"
 additional-css = ["theme/pagetoc.css"]
 additional-js = ["theme/pagetoc.js"]
 
+[preprocessor.pagetoc]
 [preprocessor.alerts]
