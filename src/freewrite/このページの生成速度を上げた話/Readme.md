@@ -9,7 +9,20 @@
 
 # cargo installについて
 rust製のソフトウェア、ライブラリは、[crates.io](https://crates.io)によって登録、管理されています。 **cargo**というツールを活用することで、プロジェクトにライブラリを追加したり、rust製のアプリケーションをPCにインストールできます。  
-ところで、linuxやmacをお使いの皆様なら、パッケージ管理システム、いわゆる`apt`や、`brew`、`dnf`、`pacman`等々があるので、Pythonの`pip`のように、邪魔な存在になり得ると思われます。  
+cargoは、aptなどのパッケージマネージャーと異なり、インストール時にビルドをするため、インストール時間がながくなってしまいがちです。
 
+GithubActionsは、簡単に言えば一時的にlinux環境を借りることができる機能なのですが、処理が終わればその環境はリセットされます。　また、最低限の機能しか内臓されてない(とはいえdockerとかcargoとかは標準である)ので、mdbookをcargoでいちいちインストールする必要があるのです。
 
+# 生成速度を上げるために
+つまり、cargo installを回避すれば、高速化できるということです。
+そこで、dockerの力を借りることにしました。  
+-> [tam1192/MyMdbookContainer](https://github.com/tam1192/MyMdbookContainer) 
 
+あらかじめ、cargo installを済ませたmdbook内臓のdockerイメージを作成しておき、[公開しておくことにした](https://github.com/tam1192/MyMdbookContainer/pkgs/container/mymdbookcontainer)のです。  
+このコンテナイメージはmdbookと、このページに使うプラグインを追加して、イメージにしております。  イメージの公開先は、[ghcr.io](https://ghcr.io)を活用してます。 githubが所有するコンテナリポジトリです。
+
+# 結果
+cargo installを排除できたので、高速化できました。
+なお、docker pullについて、ghcr.ioを活用することで、高速にダウンロードができます。
+
+その結果、ページ生成が速くなりました。
