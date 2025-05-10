@@ -28,3 +28,11 @@ https://mirror.hashy0917.net/
 - [![qiita](https://img.shields.io/badge/qiita-green?style=flat-square&link=https%3A%2F%2Fqiita.com%2Ftamkame123)](https://qiita.com/tamkame123)  
   qiitaでも書いてます。
 
+## notepad.mdについて
+- url: [https://adw39.org](https://adw39.org)
+- repo: [tam1192/tam1192](https://github.com/tam1192/tam1192)
+
+[mdbook](https://github.com/rust-lang/mdBook)を使用した暫定ブログです。　今後機能つけて正式ブログにするか、wordpress鯖立てるかは迷ってます。  
+github pagesを使ってるので、そんなに落ちないと思います。 自宅鯖に移行した暁には落とさないようベストを尽くします。  
+
+さりげなくご要望受け付けてます。 githubアカウントお持ちの方は(これ見てる人ほとんどたと思うが)、[issue](https://github.com/tam1192/tam1192/issues)にお願いします。
