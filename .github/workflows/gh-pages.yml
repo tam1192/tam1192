@@ -30,17 +30,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup mdBook
-        uses: peaceiris/actions-mdbook@v2
-        with:
-          mdbook-version: 'latest'
-      - name: Install plugins for mdbook-alerts
-        run: cargo install mdbook-alerts
+      - name: Build with mdBook
+        run: docker run --rm -v .:/running ghcr.io/tam1192/mymdbookcontainer:main build
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Build with mdBook
-        run: mdbook build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
