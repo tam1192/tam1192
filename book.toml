@@ -5,8 +5,10 @@ multilingual = false
 src = "src"
 title = "Notepad.md"
 
+[preprocessor.pagetoc]
+[preprocessor.alerts]
+
 [output.html]
 additional-css = ["theme/pagetoc.css"]
 additional-js = ["theme/pagetoc.js"]
 
-[preprocessor.alerts]
