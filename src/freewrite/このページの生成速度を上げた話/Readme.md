@@ -19,10 +19,10 @@ GithubActionsは、簡単に言えば一時的にlinux環境を借りること�
 -> [tam1192/MyMdbookContainer](https://github.com/tam1192/MyMdbookContainer) 
 
 あらかじめ、cargo installを済ませたmdbook内臓のdockerイメージを作成しておき、[公開しておくことにした](https://github.com/tam1192/MyMdbookContainer/pkgs/container/mymdbookcontainer)のです。  
-このコンテナイメージはmdbookと、このページに使うプラグインを追加して、イメージにしております。  イメージの公開先は、[ghcr.io](https://ghcr.io)を活用してます。 githubが所有するコンテナリポジトリです。
+このコンテナイメージはmdbookと、このページに使うプラグインを追加して、イメージにしております。  
 
-# 結果
-cargo installを排除できたので、高速化できました。
-なお、docker pullについて、ghcr.ioを活用することで、高速にダウンロードができます。
+イメージの公開先は、[ghcr.io](https://ghcr.io)を活用してます。 githubが所有するコンテナリポジトリです。 github Actionsもgithubが所有する機能の一つなので、その繋がりで高速化が期待できそうですね！
 
-その結果、ページ生成が速くなりました。
+
+# 結論
+ページ生成が速くなりました。
