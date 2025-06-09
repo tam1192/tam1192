@@ -6,13 +6,18 @@
 
 ## **experiments-wasm-vue** について  
 
+> [!WARNING]  
+> 本リポジトリは現在修復作業中です...
+> なぜmainに手を加えたしとか、絶対に言っちゃダメですからね？
+
 このリポジトリでは、RustをWASMとしてコンパイルし、Vueと連携する試みを行いました。   
 内容としてはシンプルで、BMPパーサーを作る際にお世話になったnomを活用し、四則演算パーサーを作ったものです。  
 当初、外部ライブラリを使うとWASMのコンパイルが難しいかと思っていましたが、入出力が絡まない処理なら問題なく通ることが分かりました。   
 LLVMが適切に変換してくれるらしく、「まじか…？」と驚きつつも、その柔軟さに感動しました。  
 
 リポジトリのリンク:  
-➡ [experiments-wasm-vue](https://github.com/tam1192/experiments-wasm-vue)  
+- [experiments-wasm-vue](https://github.com/tam1192/experiments-wasm-vue)  
+- [~~動作を見てみる~~(現在動きません、ごめんなさい🙏)](https://tam1192.github.io/vue-wasm-app/)
 
 ## Vueの環境構築とWASMの連携
 Vueの開発環境はViteを使ってセットアップしました。 そのため、通常のVue開発とは少し異なり、Viteの設定にも気を配る必要がある点がポイントになります。  
