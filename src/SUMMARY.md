@@ -4,6 +4,7 @@
 # コーディング日記
 - [MyParserProject](./coding-nikki/my_parser_project/Readme.md)
 - [手を動かしながらgitを使う](./coding-nikki/手を動かしながらgitを使う/Readme.md)
+- [Vue × WASM × Rust—試行錯誤とこれからの展望](./coding-nikki/Vue_×_WASM_×_Rust_試行錯誤とこれからの展望/Readme.md)
 
 # サーバーネタ
 - [Ceph-monって何？](./server-nikki/ceph-monってなに？/Readme.md)
