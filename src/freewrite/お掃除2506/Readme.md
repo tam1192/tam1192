@@ -204,3 +204,7 @@ Minecraftのプラグインは、基本的にサーバー環境の拡張を目�
 
 ### リポジトリへのリンク  
 - [MCAutoShutdownPlugin](https://github.com/tam1192/MCAutoShutdownPlugin)
+
+# お掃除まとめ
+色々書きましたが(...AIが書いてくれましたが)  
+懐かしいものから、続きを作りたいものもたくさん出てきたので、今後もっと深めていけたらと思いましたとさ。
