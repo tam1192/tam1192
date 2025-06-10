@@ -27,6 +27,8 @@
 # 思い出話
 整理しながら懐かしいrepo触ってるので、せっかくだし思い出話をしてしまおうと思います。
 
+---
+
 ## vox-ttsシリーズの開発と試行錯誤  
 
 **vox-tts**は、VoicevoxのREST APIを活用したDiscord TTSボットで、私が最初に「書き切った！」と感じたプログラムのひとつ。Pythonで始め、のちにJSへ移行しました。この過程で得た知見を振り返ります。  
@@ -53,17 +55,25 @@ console.log(userData, posts, comments);
 ### リポジトリへのリンク
 - [vox-tts.py](https://github.com/tam1192/vox-tts.py)
 - [vox-tts.js](https://github.com/tam1192/vox-tts.js)
+  - [node-voxclient](https://github.com/tam1192/node-voxclient)  
+    Voicevoxを使う関数群を分離したやつです。 ...全然記憶にない
 
 ### 参考など
 - [voicevox - 無料で使える中品質なテキスト読み上げ・歌声合成ソフトウェア](https://voicevox.hiroshiba.jp)
 - [discord.py](https://discordpy.readthedocs.io/ja/latest/index.html)
 - [discord.js](https://discord.js.org)
 
-## node-dirtools: 非同期処理を活用したファイル管理ツール
-node-dirtools は、vox-ttsのために開発したディレクトリ処理ツールで、Promise.allをフル活用した設計になっています。 主な機能はシンプルで、ディレクトリ内のファイルを非同期的に読み込み、特定の処理を実施すること。特に、複数の設定ファイルを同時に読み込む仕組みを作ることで、柔軟なファイル管理が可能になりました。
+---
+
+## experiments-discord-bot.js & node-dirtools
+vox-tts.jsを作る前に検証用として作ったbotです。  
+vox-ttsの項で大体の説明をしてしまったため、ここではリポジトリのリンクに留めます。
 
 ### リポジトリへのリンク
 - [node-dirtools](https://github.com/tam1192/node-dirtools)
+- [experiments-discord-bot.js](https://github.com/tam1192/experiments-discord-bot.js)
+
+---
 
 ## experiments-blockview.rs: Rustとの出会いと試作コード  
 
@@ -71,6 +81,8 @@ Rustに触れ始めたきっかけは、**ゲームのmod修正**でした。
 致命的なバグが放置されていて、誰も修正しようとしていなかったので、「ならば自分で直してみよう」と思ったのが始まり。Rustの本を読みつつ、当時流行っていたAIも活用しながらコードを書き進めました。  
 
 最初は試行錯誤の連続で、書いたコードも拙いものでした。**unsafeを使いまくる方法**を取っていたので、PRを出した際に大量の指摘を受けました。しかし、それが結果的にRustの型システムや所有権の概念を深く理解する良い機会になったと思っています。  
+
+---
 
 ### Rustで書いた試作コード  
 
@@ -88,9 +100,13 @@ Rustを学ぶために書いたコードのひとつに、**8色程度の色デ�
 - [experiments-blockview.rs](https://github.com/tam1192/experiments-blockview.rs)  
 - [gm_turbostroi_rust(修正したmod)](https://github.com/tam1192/gm_turbostroi_rust)
 
+---
+
 ## experiments-wasm-vue
 名前変えました。 そして書いてたら長くなったのでページ分けました  
 -> [Vue × WASM × Rust—試行錯誤とこれからの展望](/coding-nikki/Vue_×_WASM_×_Rust_試行錯誤とこれからの展望)  
+
+---
 
 ## item_json_maker: Minecraftリソースパック制作のためのツール
 Minecraftのリソースパックを作る際に使用するツールとして、item_json_maker を作成しました。 
@@ -108,3 +124,49 @@ Minecraftのリソースパックを作る際に使用するツールとして�
 ### リポジトリへのリンク  
 - [item_json_maker](https://github.com/tam1192/item_json_maker)  
 - [実は使える](https://tam1192.github.io/item_json_maker/)
+
+---
+
+## **comAccess: Windowsでシリアルポート通信を可能にするツール**  
+
+Windowsには**Windows Terminal**という非常に使いやすいターミナルが備わっていますが、  
+**シリアルポートに直接接続できない**という制約があります。  
+その不便さを解消するために、**Windows APIを駆使してcomポートアクセス用のプログラム**を作成しました。  
+
+### **開発の経緯—シリアル通信の難しさ**  
+
+開発を進める中で、**シリアルポートの制御が意外とシビア**であることを実感しました。  
+特にWindows環境では、通信の安定性やデバイスの排他制御など、考慮すべき点が多くあります。  
+最初はCで書きましたが、cisco機の一部は認識しなかったりとまだまだ改善の余地があります。
+
+この過程で、**Teratermの偉大さ**を改めて感じました。  
+長年シリアル通信の定番ソフトとして君臨している理由がよく分かりますね。  
+
+### **Rustでの挑戦と課題**  
+
+実は、**Rustを使ってcomAccessを作ろう**と試みましたが、こちらは更に通信がうまくいかず、実装に苦戦しました。  
+Rustには環境に依存しない**serialportクレート**があり、これを利用しようとしましたが、  
+実際に通信が来ない問題に直面しました。  
+
+さらに、Cの時同様に、**Windowsの排他制御**も面倒で、ポートの管理に苦戦。  
+結果として、Rustでの実装を諦めました。
+
+### **Windows環境の変化—weztermとの併用**  
+
+最近、**使用する環境がMacに変わった**ことで、シリアル通信の選択肢が増えました。  
+Macでは**screenコマンド**を使えばシリアル通信が可能になります。  
+とはいえ、**wezterm**というRust製ターミナルも並行して使用しており、  
+試行錯誤しながら快適な環境を模索しています。  
+
+**weztermの強み**として、  
+- **フォントの柔軟なカスタマイズ**  
+- **画像表示機能**  
+- **高度なタイル型ウィンドウ管理**  
+
+などがあり、標準のターミナルとは違った使い勝手がありそうです。  
+今後、使い込んでいく中で特筆したいポイントが出てきたら、記事にまとめたいと思います。  
+
+### リポジトリへのリンク  
+- [comAccess](https://github.com/tam1192/comAccess)  
+
+---
