@@ -32,6 +32,8 @@ https://mirror.hashy0917.net/
   githubアカウントです。
 - [![qiita](https://img.shields.io/badge/qiita-green?style=flat-square&link=https%3A%2F%2Fqiita.com%2Ftamkame123)](https://qiita.com/tamkame123)  
   qiitaでも書いてます。
+- [BlueSky](https://bsky.app/profile/nikki9750.bsky.social)  
+  bluesky登録できた（今更）
 
 ## notepad.mdについて
 - url: [https://adw39.org](https://adw39.org)
