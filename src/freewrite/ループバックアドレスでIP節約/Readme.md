@@ -138,3 +138,6 @@ L3スイッチ側はプライベートIPを割り当て、相手側のループ�
 
 # 参考
 - [Netplan documentation(routing)](https://netplan.readthedocs.io/en/stable/netplan-yaml/#routing)
+- [github copilot](https://github.com/copilot)   
+  PRとかで意見もらえそうなので使ってみました。  
+  ~~こんな記事に使うな~~ 
