@@ -134,8 +134,6 @@ L3スイッチ側はプライベートIPを割り当て、相手側のループ�
 
 ...という今更の話題でした。
 
-> **グローバルIPはケチってナンボ。余った分でビールでも飲みましょう🍺**
-
 # 参考
 - [Netplan documentation(routing)](https://netplan.readthedocs.io/en/stable/netplan-yaml/#routing)
 - [github copilot](https://github.com/copilot)   
