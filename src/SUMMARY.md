@@ -13,3 +13,4 @@
 - [検証するならtmp使えや](./freewrite/tmp使えや!/Readme.md)
 - [このページの生成速度を上げた話](./freewrite/このページの生成速度を上げた話/Readme.md)
 - [お掃除2506](./freewrite/お掃除2506/Readme.md)
+- [ループバックアドレスでIP節約](./freewrite/ループバックアドレスでIP節約/Readme.md)
