@@ -7,8 +7,13 @@ title = "Notepad.md"
 
 [preprocessor.pagetoc]
 [preprocessor.alerts]
+[preprocessor.katex]
+
+after = ["links"]
+
+[output.html.playground]
+editable = true
 
 [output.html]
 additional-css = ["theme/pagetoc.css"]
 additional-js = ["theme/pagetoc.js"]
-
