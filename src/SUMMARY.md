@@ -15,3 +15,4 @@
 - [お掃除2506](./freewrite/お掃除2506/Readme.md)
 - [ループバックアドレスでIP節約](./freewrite/ループバックアドレスでIP節約/Readme.md)
 - [algorithm_rsについて](./freewrite/algorithm_rs/Readme.md)
+- [外は暑い](./freewrite/外は暑い/Readme.md)
