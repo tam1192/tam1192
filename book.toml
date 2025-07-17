@@ -8,6 +8,8 @@ title = "Notepad.md"
 [preprocessor.pagetoc]
 [preprocessor.alerts]
 [preprocessor.katex]
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
 
 after = ["links"]
 
@@ -16,4 +18,4 @@ editable = true
 
 [output.html]
 additional-css = ["theme/pagetoc.css"]
-additional-js = ["theme/pagetoc.js"]
+additional-js = ["theme/pagetoc.js", "mermaid.min.js", "mermaid-init.js"]
