@@ -18,4 +18,4 @@ editable = true
 
 [output.html]
 additional-css = ["theme/pagetoc.css"]
-additional-js = ["theme/pagetoc.js", "mermaid.min.js", "mermaid-init.js"]
+additional-js = ["theme/pagetoc.js", "theme/mermaid.min.js", "theme/mermaid-init.js"]
