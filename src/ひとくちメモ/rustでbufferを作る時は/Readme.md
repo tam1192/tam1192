@@ -50,7 +50,7 @@ buf は u8 なので問題ないが、clone の動作が特殊な Rc,Arc を使�
 
 ## サイズ指定が必要な理由と 0 埋めが必要な理由
 
-```
+```rust, editable
 fn read(buf: &mut [u8]) {
     buf[0] = b'h';
     buf[1] = b'l';
@@ -62,23 +62,8 @@ fn read(buf: &mut [u8]) {
 
 fn main() {
     let mut buf = Vec::new();
-    read(&mut buf);
-    println!("{:?}", buf);
-}
-```
-
-```
-fn read(buf: &mut [u8]) {
-    buf[0] = b'h';
-    buf[1] = b'l';
-    buf[2] = b'l';
-    buf[3] = b'o';
-    buf[4] = b'w';
-    buf[5] = b'\n';
-}
-
-fn main() {
-    let mut buf = Vec::with_capacity(10);
+    // 変更してみて。
+    // let mut buf = Vec::with_capacity(10);
     read(&mut buf);
     println!("{:?}", buf);
 }
