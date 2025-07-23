@@ -19,3 +19,6 @@ editable = true
 [output.html]
 additional-css = ["theme/pagetoc.css"]
 additional-js = ["theme/pagetoc.js", "theme/mermaid.min.js", "theme/mermaid-init.js"]
+git-repository-url = "https://github.com/tam1192/tam1192"
+default-theme = "light"
+preferred-dark-theme = "navy"
