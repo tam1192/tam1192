@@ -221,7 +221,7 @@ direction TB
 	    HttpMethod method
 	    HttpPath path
 	    HttpVersion version
-	    HttpHeader header
+	    HashMap header
 	    Vec body
     }
     class HttpPath {
@@ -404,50 +404,50 @@ assert_eq!(HttpVersion::from(""), HttpVersion::Http10);
 
 一番しんどいところです。 特に使う部分(Content-Type や Accept、Host など)は別の関数から、簡易的にアクセスできるようにしていいと思います。
 KeyValue 方式なので、それに従い HashMap を活用しましょう。
+とりあえず 1 行をパースして hashmap に追加するところまで作ってみよう。
 
 ちなみに、header と body の間には 1 行の空白行があります。 これは上手く使えそうですね! 私は上手く使えてるかわからんけど。
 
 ```rust
-use std::collections::HashMap;
+fn line_parse_http_header(s: &str) -> Option<(&str, &str)> {
+    // 1行取得する。
+    let line = s.lines().next()?;
+    // :で分けて、無駄なスペースの排除。
+    let mut parts = line.split(':').map(|s| s.trim()).filter(|s| !s.is_empty());
 
-struct HttpHeader<'a>(HashMap<&'a str, &'a str>);
+    // 2個取って1個目をkey、2個目をvalueと仮定する。 一つでもかけたらheaderじゃないと考える
+    let key = parts.next()?;
+    let value = parts.next()?;
 
-// 1行ベースで追加できるようにする。
-impl<'a> HttpHeader<'a> {
-    fn new() -> Self {
-        HttpHeader(HashMap::<&str, &str>::new())
+    // 3個目があったらheaderじゃないと考える
+    if parts.next() != None {
+        return None;
     }
 
-    fn insert(&mut self, key: &'a str, value: &'a str) {
-        self.0.insert(key, value);
-    }
+    Some((key, value))
 }
 
+# fn main() {
+assert_eq!(
+    line_parse_http_header("Content-Type: text/plain"),
+    Some(("Content-Type", "text/plain")));
+assert_eq!(
+    line_parse_http_header("Content-Type:"),
+    None);
+assert_eq!(
+    line_parse_http_header("<html><head><title>hello</title></head><body></body></html>"),
+    None);
+assert_eq!(
+    line_parse_http_header("<html><head><title>:</title></head><body></body></html>"),
+    Some(("<html><head><title>", "</title></head><body></body></html>")));
 
-                loop {
-                    if let Some(line) = lines.next() {
-                        let mut parts =
-                            line.split(':').map(|s| s.trim()).filter(|s| !s.is_empty());
 
-                        let key = match parts.next() {
-                            Some(k) => k,
-                            None => break, // no more headers
-                        };
-
-                        let value = match parts.next() {
-                            Some(v) => v,
-                            None => break, // no more headers
-                        };
-
-                        if parts.next() != None {
-                            break;
-                        }
-
-                        header.insert(key, value);
-                    } else {
-                        break;
-                    }
-                }
-
-                header
+# println!("all success! 成功!");
+# println!("");
+# println!("補足");
+# println!("最後のコードではHtmlがそのままHeaderとしてパースされている");
+# println!("残念ながら、この実装でも、そのデータが完璧にHeaderである保証はできない。");
+# println!("しかし、正規的なHTTPパケットであればheadとbodyの間に1行の隙間がある。");
+# println!("これを使い、とりあえずhtmlコードがパースされる心配はないようにする");
+# }
 ```
