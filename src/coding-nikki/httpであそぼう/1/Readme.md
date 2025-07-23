@@ -1,0 +1,408 @@
+# HTTP であそぼう part1
+
+作業しながら備忘録として書いてるので、基本内容は適当、思いつきです。
+参考にしないでね。
+
+## とりあえずサッと書いてみた。
+
+```rust
+#use std::{
+#    collections::HashMap,
+#    fmt::Display,
+#    io::{Read, Write},
+#    net::{IpAddr, SocketAddr, TcpListener},
+#    sync::{Arc, Mutex, mpsc::channel},
+#    thread,
+#};
+
+#mod route;
+fn main() {
+    let listener = TcpListener::bind("0.0.0.0:80").unwrap();
+    loop {
+        if let Ok(data) = listener.accept() {
+            let (stream, addr) = data;
+            let mut stream = stream;
+
+            // read data
+            let (buf, _) = {
+                let mut buf = [0u8; 1024];
+                match stream.read(&mut buf) {
+                    Ok(size) => (buf, size),
+                    Err(err) => {
+                        eprintln!("{}", err);
+                        return;
+                    }
+                }
+            };
+
+            let data = String::from_utf8_lossy(&buf);
+            let mut lines = data.lines();
+
+            let (method, path, _) = {
+                // GET / HTTP/1.1
+                let line = lines.next().unwrap(); // first Line
+                let mut parts = line.split_whitespace();
+                // parse method
+                let method = HttpMethod::from(parts.next().unwrap_or(""));
+                // parse path
+                let path = HttpPath::from(parts.next().unwrap_or(""));
+                // parse version
+                let version = parts.next().unwrap_or("");
+                (method, path, version)
+            };
+
+            let headers = {
+                let mut header = HashMap::<&str, &str>::new();
+                // parse headers
+
+                loop {
+                    if let Some(line) = lines.next() {
+                        let mut parts =
+                            line.split(':').map(|s| s.trim()).filter(|s| !s.is_empty());
+
+                        let key = match parts.next() {
+                            Some(k) => k,
+                            None => break, // no more headers
+                        };
+
+                        let value = match parts.next() {
+                            Some(v) => v,
+                            None => break, // no more headers
+                        };
+
+                        if parts.next() != None {
+                            break;
+                        }
+
+                        header.insert(key, value);
+                    } else {
+                        break;
+                    }
+                }
+
+                header
+            };
+
+            let _ = stream.flush();
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum HttpMethod {
+    Get,
+    Post,
+    Put,
+    Delete,
+}
+impl Display for HttpMethod {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            HttpMethod::Get => write!(f, "GET"),
+            HttpMethod::Post => write!(f, "POST"),
+            HttpMethod::Put => write!(f, "PUT"),
+            HttpMethod::Delete => write!(f, "DELETE"),
+        }
+    }
+}
+impl HttpMethod {
+    fn from_str(s: &str) -> Option<Self> {
+        match s.to_lowercase().as_str() {
+            "get" => Some(HttpMethod::Get),
+            "post" => Some(HttpMethod::Post),
+            "put" => Some(HttpMethod::Put),
+            "delete" => Some(HttpMethod::Delete),
+            _ => None,
+        }
+    }
+}
+impl From<&str> for HttpMethod {
+    fn from(s: &str) -> Self {
+        HttpMethod::from_str(s).unwrap_or(HttpMethod::Get)
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct HttpPath<'a>(&'a str);
+
+impl<'a> HttpPath<'a> {
+    fn from_str(s: &'a str) -> Option<Self> {
+        let mut c = s.chars();
+        // Check if the first character is a slash
+        if c.next() != Some('/') {
+            return None;
+        }
+
+        // 許可文字以外を検知したらNoneを返す
+        // findの戻り値=Noneなら許可文字のみ
+        if c.find(|c| !(c.is_ascii_alphanumeric() || *c == '/' || *c == '-' || *c == '_')) == None {
+            Some(HttpPath(s))
+        } else {
+            None
+        }
+    }
+}
+
+impl<'a> From<&'a str> for HttpPath<'a> {
+    fn from(s: &'a str) -> Self {
+        HttpPath::from_str(s).unwrap_or(HttpPath("/"))
+    }
+}
+```
+
+書いてて思ったのですが、~~AI ってすげぇや~~AI 保管ウゼェ！！  
+いや、ほんとこれ大量に処理リソース食う=お金かかるのにこれいうのはまじで申し訳ないんですが、慣れるまでの間は大変です。
+
+自分が想定している以上のコードまで書いてくれて、私が置いてきぼりになる。  
+機長置いていかないでもろて... ~~アンチアイスオフにしないでよね~~
+
+とはいえ普通に便利です。
+
+## HTTP ヘッダーの形について
+
+nc コマンドで取得してみると...
+
+```sh
+nc -l 80
+```
+
+```sh
+curl http://localhost/
+```
+
+この結果(nc 側に表示される)は次のとおり
+
+```http
+GET / HTTP/1.1
+Host: localhost
+User-Agent: curl/8.7.1
+Accept: */*
+```
+
+一方、MDN などで調べると返信はこんな感じになります。
+
+```http
+HTTP/1.1 200 Ok
+Content-Type: text/html; charset: utf-8;
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>hello world</title>
+    </head>
+    <body>
+        <h1>hello world</h1>
+    </body>
+</html>
+```
+
+これを撃ち返してやれば
+
+**hello world**
+
+というサイトが表示されるでしょう
+
+ちなみに、nc は出力以外にも**入力に対応**しているので、リクエスト(GET / HTTP/1.1)と届いたら、それを返すだけでページを返せます。
+(全て書き終わったら、^c もしくは^d で nc を一度終了させたら行きます。 いかない場合もあるかも。)
+
+## HTTP ヘッダー関係を構造体にしてしまおう
+
+上記コードを少し変えて、しっかり構造体にしちましょう。
+
+```mermaid
+---
+config:
+  class:
+    hideEmptyMembersBox: true
+---
+classDiagram
+direction TB
+    class HttpRequest {
+	    HttpMethod method
+	    HttpPath path
+	    HttpVersion version
+	    HttpHeader header
+	    Vec body
+    }
+    class HttpPath {
+    }
+    class HttpMethod {
+	    GET
+	    POST
+	    DELETE
+	    PUT
+    }
+    class HttpVersion {
+	    Http10
+	    Http11
+	    Http20
+	    Http30
+    }
+
+    HttpPath --* HttpRequest
+    HttpMethod --* HttpRequest
+    HttpVersion --* HttpRequest
+```
+
+この形にするのが無難かな？
+
+### path
+
+Path は[関連 RFC](https://datatracker.ietf.org/doc/html/rfc3986#section-2.3)によると
+
+```
+unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
+```
+
+が使えるらしいです。 ALPHA は a-z と A-Z、DIGIT は 0-9 です。
+つまり、new 時点でこの文字でしか作れないように制約をつけましょう。
+
+```rust
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct HttpPath<'a>(&'a str);
+
+impl<'a> HttpPath<'a> {
+    // 許可された文字列のみで作る
+    fn from_str(s: &'a str) -> Option<Self> {
+        // 文字単位に分解します
+        let mut c = s.chars();
+
+        // 先頭は/になると見込んで
+        if c.next() != Some('/') {
+            return None;
+        }
+
+        // findメソッドで許可されていない文字があるか検索しましょう
+        // なかったら成功です。
+        if c.find(|c| {
+            // a-zA-Z0-9/\-_以外を探す
+            !(c.is_ascii_alphanumeric() || *c == '/' || *c == '-' || *c == '_')
+        }) == None {
+            Some(HttpPath(s))
+        } else {
+            None
+        }
+    }
+}
+
+// Fromトレイトもつけて、文字列から簡単に変換できるようにしましょう
+impl<'a> From<&'a str> for HttpPath<'a> {
+    fn from(s: &'a str) -> Self {
+        HttpPath::from_str(s).unwrap_or(HttpPath("/")) // デフォルト値は /
+    }
+}
+
+# fn main() {
+// 検証してみよう
+assert!(matches!(HttpPath::from_str("/"), Some(_)));
+assert!(matches!(HttpPath::from_str("/aaa/bbb/ccc"), Some(_)));
+assert!(matches!(HttpPath::from_str("こんにちは！"), None));
+# println!("all success! 成功!");
+# }
+```
+
+コード的には**最初の難関**。 文字に分解して find で not 検索を行うからね。  
+頭捻らないと出てこない。日記さんは他のところでパーサーやってたので感覚的にはわかるけど。
+
+### method
+
+調べるのがめんどかったので、主要四つにしましょう。
+
+```
+GET
+POST
+DELETE
+PUT
+```
+
+これを扱える enum を作れば良いです。 文字列でも生成可能にしましょう。
+
+```rust
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum HttpMethod {
+    Get,
+    Post,
+    Put,
+    Delete,
+}
+impl HttpMethod {
+    fn from_str(s: &str) -> Option<Self> {
+        // 大文字/小文字を考慮しない。(小文字に統一)
+        match s.to_lowercase().as_str() {
+            "get" => Some(HttpMethod::Get),
+            "post" => Some(HttpMethod::Post),
+            "put" => Some(HttpMethod::Put),
+            "delete" => Some(HttpMethod::Delete),
+            _ => None,
+        }
+    }
+}
+impl From<&str> for HttpMethod {
+    fn from(s: &str) -> Self {
+        HttpMethod::from_str(s).unwrap_or(HttpMethod::Get)
+    }
+}
+
+# fn main() {
+// 検証してみよう
+assert_eq!(HttpMethod::from("get"), HttpMethod::Get);
+assert_eq!(HttpMethod::from("post"), HttpMethod::Post);
+assert_eq!(HttpMethod::from("put"), HttpMethod::Put);
+assert_eq!(HttpMethod::from("delete"), HttpMethod::Delete);
+assert_eq!(HttpMethod::from(""), HttpMethod::Get);
+# println!("all success! 成功!");
+# }
+```
+
+### version
+
+簡易的に作る時は無視するところですね。  
+これも基本的には enum で ok。 TLS/SSL と違って更新頻度が低いので、`1.0, 1.1, 2.0, 3.0` があれば ok です。
+(1.0 もいらないかも。)
+
+```rust
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum HttpVersion {
+    Http10,
+    Http11,
+    Http20,
+    Http30,
+}
+impl HttpVersion {
+    fn from_str(s: &str) -> Option<Self> {
+        // 大文字/小文字を考慮しない。(小文字に統一)
+        match s.to_lowercase().as_str() {
+            "http/1.0" => Some(HttpVersion::Http10),
+            "http/1.1" => Some(HttpVersion::Http11),
+            "http/2.0" => Some(HttpVersion::Http20),
+            "http/3.0" => Some(HttpVersion::Http30),
+            _ => None,
+        }
+    }
+}
+impl From<&str> for HttpVersion  {
+    fn from(s: &str) -> Self {
+        HttpVersion::from_str(s).unwrap_or(HttpVersion::Http10)
+    }
+}
+
+# fn main() {
+// 検証してみよう
+assert_eq!(HttpVersion::from("HTTP/1.0"), HttpVersion::Http10);
+assert_eq!(HttpVersion::from("HTTP/1.1"), HttpVersion::Http11);
+assert_eq!(HttpVersion::from("HTTP/2.0"), HttpVersion::Http20);
+assert_eq!(HttpVersion::from("HTTP/3.0"), HttpVersion::Http30);
+assert_eq!(HttpVersion::from(""), HttpVersion::Http10);
+# println!("all success! 成功!");
+# }
+```
+
+...つかバージョンは変更対応しんどいだけやし文字列でええやろと思った。  
+ちなみにこの記事は**実況記事**です。 この先コメントなどによってはコード計画が変わる可能性があります。
+
+### header
+
+一番しんどいところです。 特に使う部分(Content-Type や Accept、Host など)は別の関数から、簡易的にアクセスできるようにしていいと思います。
+KeyValue 方式なので、それに従い HashMap を活用しましょう。
+
+ちなみに、header と body の間には 1 行の空白行があります。 これは上手く使えそうですね! 私は上手く使えてるかわからんけど。
