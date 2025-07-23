@@ -406,3 +406,48 @@ assert_eq!(HttpVersion::from(""), HttpVersion::Http10);
 KeyValue 方式なので、それに従い HashMap を活用しましょう。
 
 ちなみに、header と body の間には 1 行の空白行があります。 これは上手く使えそうですね! 私は上手く使えてるかわからんけど。
+
+```rust
+use std::collections::HashMap;
+
+struct HttpHeader<'a>(HashMap<&'a str, &'a str>);
+
+// 1行ベースで追加できるようにする。
+impl<'a> HttpHeader<'a> {
+    fn new() -> Self {
+        HttpHeader(HashMap::<&str, &str>::new())
+    }
+
+    fn insert(&mut self, key: &'a str, value: &'a str) {
+        self.0.insert(key, value);
+    }
+}
+
+
+                loop {
+                    if let Some(line) = lines.next() {
+                        let mut parts =
+                            line.split(':').map(|s| s.trim()).filter(|s| !s.is_empty());
+
+                        let key = match parts.next() {
+                            Some(k) => k,
+                            None => break, // no more headers
+                        };
+
+                        let value = match parts.next() {
+                            Some(v) => v,
+                            None => break, // no more headers
+                        };
+
+                        if parts.next() != None {
+                            break;
+                        }
+
+                        header.insert(key, value);
+                    } else {
+                        break;
+                    }
+                }
+
+                header
+```
