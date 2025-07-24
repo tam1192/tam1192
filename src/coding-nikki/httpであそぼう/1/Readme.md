@@ -441,6 +441,9 @@ assert_eq!(
     line_parse_http_header("Content-Type: "),
     None);
 assert_eq!(
+    line_parse_http_header("   "),
+    None);
+assert_eq!(
     line_parse_http_header("<html><head><title>hello</title></head><body></body></html>"),
     None);
 assert_eq!(
@@ -456,4 +459,47 @@ assert_eq!(
 # println!("しかし、正規的なHTTPパケットであればheadとbodyの間に1行の隙間がある。");
 # println!("これを使い、とりあえずhtmlコードがパースされる心配はないようにする");
 # }
+```
+
+当然ながら header は 1 行だけではないので、複数行に対応しましょう。
+
+```rust
+use std::collections::HashMap;
+
+#fn line_parse_http_header(s: &str) -> Option<(&str, &str)> {
+#    // 1行取得する。
+#    let line = s.lines().next()?;
+#    // :で分けて、無駄なスペースの排除。
+#    let mut parts = line.split(':').map(|s| s.trim()).filter(|s| !s.is_empty());
+#
+#    // 2個取って1個目をkey、2個目をvalueと仮定する。 一つでもかけたらheaderじゃないと考える
+#    let key = parts.next()?;
+#    let value = parts.next()?;
+#
+#    // 3個目があったらheaderじゃないと考える
+#    if parts.next() != None {
+#        return None;
+#    }
+#
+#    Some((key, value))
+#}
+#
+fn main() {
+    // 行ごとに処理するイテレーターを取得
+    let buf = "Content-Type: plain/html \r\nHost: localhost\r\n\r\n<!DOCTYPE html>\r\n";
+    let mut lines = buf.lines();
+    let mut data: HashMap<&str, &str> = HashMap::new();
+
+    loop {
+        let line = lines.next().unwrap_or("");
+        match line_parse_http_header(line) {
+            Some((k, v)) => {
+                _ = data.insert(k, v);
+                },
+            None => break,
+        }
+    }
+
+    println!("{:?}", data);
+}
 ```
