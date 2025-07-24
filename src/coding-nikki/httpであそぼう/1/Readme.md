@@ -503,3 +503,102 @@ fn main() {
     println!("{:?}", data);
 }
 ```
+
+### 結合してみる
+
+これだけでよし
+
+```rust
+# use std::collections::HashMap;
+#
+# #[derive(Debug, Clone, PartialEq, Eq)]
+#struct HttpPath<'a>(&'a str);
+#
+#impl<'a> HttpPath<'a> {
+#    // 許可された文字列のみで作る
+#    fn from_str(s: &'a str) -> Option<Self> {
+#        // 文字単位に分解します
+#        let mut c = s.chars();
+#
+#        // 先頭は/になると見込んで
+#        if c.next() != Some('/') {
+#            return None;
+#        }
+#
+#        // findメソッドで許可されていない文字があるか検索しましょう
+#        // なかったら成功です。
+#        if c.find(|c| {
+#            // a-zA-Z0-9/\-_以外を探す
+#            !(c.is_ascii_alphanumeric() || *c == '/' || *c == '-' || *c == '_')
+#        }) == None {
+#            Some(HttpPath(s))
+#        } else {
+#            None
+#        }
+#    }
+#}
+#
+#// Fromトレイトもつけて、文字列から簡単に変換できるようにしましょう
+#impl<'a> From<&'a str> for HttpPath<'a> {
+#    fn from(s: &'a str) -> Self {
+#        HttpPath::from_str(s).unwrap_or(HttpPath("/")) // デフォルト値は /
+#    }
+#}
+#
+# #[derive(Debug, Clone, PartialEq, Eq)]
+#enum HttpMethod {
+#    Get,
+#    Post,
+#    Put,
+#    Delete,
+#}
+#impl HttpMethod {
+#    fn from_str(s: &str) -> Option<Self> {
+#        // 大文字/小文字を考慮しない。(小文字に統一)
+#        match s.to_lowercase().as_str() {
+#            "get" => Some(HttpMethod::Get),
+#            "post" => Some(HttpMethod::Post),
+#            "put" => Some(HttpMethod::Put),
+#            "delete" => Some(HttpMethod::Delete),
+#            _ => None,
+#        }
+#    }
+#}
+#impl From<&str> for HttpMethod {
+#    fn from(s: &str) -> Self {
+#        HttpMethod::from_str(s).unwrap_or(HttpMethod::Get)
+#    }
+#}
+#
+# #[derive(Debug, Clone, PartialEq, Eq)]
+#enum HttpVersion {
+#    Http10,
+#    Http11,
+#    Http20,
+#    Http30,
+#}
+#impl HttpVersion {
+#    fn from_str(s: &str) -> Option<Self> {
+#        // 大文字/小文字を考慮しない。(小文字に統一)
+#        match s.to_lowercase().as_str() {
+#            "http/1.0" => Some(HttpVersion::Http10),
+#            "http/1.1" => Some(HttpVersion::Http11),
+#            "http/2.0" => Some(HttpVersion::Http20),
+#            "http/3.0" => Some(HttpVersion::Http30),
+#            _ => None,
+#        }
+#    }
+#}
+#impl From<&str> for HttpVersion  {
+#    fn from(s: &str) -> Self {
+#        HttpVersion::from_str(s).unwrap_or(HttpVersion::Http10)
+#    }
+#}
+struct HttpRequest<'a> {
+    method: HttpMethod,
+    path: HttpPath<'a>,
+    version: HttpVersion,
+    header: HashMap<&'a str, &'a str>,
+    body: Vec<u8>,
+}
+```
