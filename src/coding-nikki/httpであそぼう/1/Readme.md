@@ -729,7 +729,7 @@ impl<'a> HttpRequest<'a> {
 // 文字列で取得できるように、Displayを実装しておきましょう
 impl<'a> fmt::Display for HttpRequest<'a> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{} {} {}\r\n", self.method, self.method, self.version)?;
+        write!(f, "{} {} {}\r\n", self.method, self.path, self.version)?;
         for (k, v) in &self.header {
             write!(f, "{}: {}\r\n", k, v)?;
         }
@@ -755,6 +755,13 @@ impl<'a> fmt::Display for HttpResponse<'a> {
         write!(f, "\r\n{}", self.body)
     }
 }
+
+fn main() {
+    let packet = "GET / HTTP/1.1\r\nHost: localhost\r\nAccept: */*\r\n\r\n";
+    let request = HttpRequest::from_str(&packet).unwrap();
+    println!("{}", request);
+}
+
 ```
 
 HttpRequest と HttpResponse の
