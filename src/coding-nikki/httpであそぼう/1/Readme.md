@@ -637,4 +637,11 @@ struct HttpRequest<'a> {
     header: HashMap<&'a str, &'a str>,
     body: Vec<u8>,
 }
+
+struct HttpResponse<'a> {
+    version: HttpVersion,
+    status: (u32, &'a str), // レスポンスは番号とメッセージで返す
+    header: HashMap<&'a str, &'a str>,
+    body: Vec<u8>,
+}
 ```
