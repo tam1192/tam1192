@@ -446,21 +446,10 @@ KeyValue 方式なので、それに従い HashMap を活用しましょう。
 
 ```rust
 fn line_parse_http_header(s: &str) -> Option<(&str, &str)> {
-    // 1行取得する。
-    let line = s.lines().next()?;
-    // :で分けて、無駄なスペースの排除。
-    let mut parts = line.split(':').map(|s| s.trim()).filter(|s| !s.is_empty());
+    // 最初の:を探す
+    let i = s.find(':')?;
 
-    // 2個取って1個目をkey、2個目をvalueと仮定する。 一つでもかけたらheaderじゃないと考える
-    let key = parts.next()?;
-    let value = parts.next()?;
-
-    // 3個目があったらheaderじゃないと考える
-    if parts.next() != None {
-        return None;
-    }
-
-    Some((key, value))
+    Some((&s[0..i], &s[i+1..].trim())) // :でk/vを切り分けて終わり
 }
 
 # fn main() {
@@ -469,13 +458,13 @@ assert_eq!(
     Some(("Content-Type", "text/plain")));
 assert_eq!(
     line_parse_http_header("Content-Type:"),
-    None);
+    Some(("Content-Type", "")));
 assert_eq!(
     line_parse_http_header("Content-Type: Content-Type: text/plain"),
-    None);
+    Some(("Content-Type", "Content-Type: text/plain")));
 assert_eq!(
     line_parse_http_header("Content-Type: "),
-    None);
+    Some(("Content-Type", "")));
 assert_eq!(
     line_parse_http_header("   "),
     None);
@@ -503,21 +492,10 @@ assert_eq!(
 use std::collections::HashMap;
 
 #fn line_parse_http_header(s: &str) -> Option<(&str, &str)> {
-#    // 1行取得する。
-#    let line = s.lines().next()?;
-#    // :で分けて、無駄なスペースの排除。
-#    let mut parts = line.split(':').map(|s| s.trim()).filter(|s| !s.is_empty());
+#    // 最初の:を探す
+#    let i = s.find(':')?;
 #
-#    // 2個取って1個目をkey、2個目をvalueと仮定する。 一つでもかけたらheaderじゃないと考える
-#    let key = parts.next()?;
-#    let value = parts.next()?;
-#
-#    // 3個目があったらheaderじゃないと考える
-#    if parts.next() != None {
-#        return None;
-#    }
-#
-#    Some((key, value))
+#    Some((&s[0..i], &s[i+1..].trim())) // :でk/vを切り分けて終わり
 #}
 #
 fn main() {
@@ -658,21 +636,10 @@ fn main() {
 #}
 #
 #fn line_parse_http_header(s: &str) -> Option<(&str, &str)> {
-#    // 1行取得する。
-#    let line = s.lines().next()?;
-#    // :で分けて、無駄なスペースの排除。
-#    let mut parts = line.split(':').map(|s| s.trim()).filter(|s| !s.is_empty());
+#    // 最初の:を探す
+#    let i = s.find(':')?;
 #
-#    // 2個取って1個目をkey、2個目をvalueと仮定する。 一つでもかけたらheaderじゃないと考える
-#    let key = parts.next()?;
-#    let value = parts.next()?;
-#
-#    // 3個目があったらheaderじゃないと考える
-#    if parts.next() != None {
-#        return None;
-#    }
-#
-#    Some((key, value))
+#    Some((&s[0..i], &s[i+1..].trim())) // :でk/vを切り分けて終わり
 #}
 #
 #
@@ -764,7 +731,7 @@ fn main() {
 
 ```
 
-HttpRequest と HttpResponse の
+HttpRequest と HttpResponse の構造体を定義、うち Request は文字列からの生成と出力に対応させた。
 
 ### 次回
 
