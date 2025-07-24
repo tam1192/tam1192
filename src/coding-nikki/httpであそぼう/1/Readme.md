@@ -860,18 +860,20 @@ fn main() {
         let index = base.find('-').unwrap_or(0);
 
         assert_eq!((&base[0..index], &base[index+1..]),("33","4"));
-        # println!("33-4 を 33と4に分解できました");
+        println!("33-4 を 33と4に分解できました");
     }
     {
         let base = "33-4";
         let res = base.chars().find(|c| c.is_ascii_control()).is_none();
 
         assert!(res);
-        # println!("33-4 にascii制御文字はありません");
-        # println!("(※ascii制御文字: 改行文字(\\n)とか、ターミナルでよく入力するであろう^c(Ctrl+c)こと)");
+        println!("33-4 にascii制御文字はありません");
     }
 }
 ```
+
+> [!NOTE]
+> ascii 制御文字: 改行文字(\\n)とか、ターミナルでよく入力するであろう^c(Ctrl+c)こと
 
 ## filter vs find (★★☆)
 
