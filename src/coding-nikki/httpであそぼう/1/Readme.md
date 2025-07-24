@@ -545,7 +545,7 @@ fn main() {
 これだけでよし
 
 ```rust
-# use std::collections::HashMap;
+# use std::{collections::HashMap, fmt};
 #
 # #[derive(Debug, Clone, PartialEq, Eq)]
 #struct HttpPath<'a>(&'a str);
@@ -580,7 +580,12 @@ fn main() {
 #        HttpPath::from_str(s).unwrap_or(HttpPath("/")) // デフォルト値は /
 #    }
 #}
-#
+#// 文字列で取得できるように、Displayを実装しておきましょう
+#impl<'a> fmt::Display for HttpPath<'a> {
+#    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+#        write!(f, "{}", self.0)
+#    }
+#}
 # #[derive(Debug, Clone, PartialEq, Eq)]
 #enum HttpMethod {
 #    Get,
@@ -605,7 +610,17 @@ fn main() {
 #        HttpMethod::from_str(s).unwrap_or(HttpMethod::Get)
 #    }
 #}
-#
+#// 文字列で取得できるように、Displayを実装しておきましょう
+#impl fmt::Display for HttpMethod {
+#    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+#        write!(f, "{}", match self {
+#            Self::Get => "GET",
+#            Self::Post => "POST",
+#            Self::Put => "PUT",
+#            Self::Delete => "DELETE",
+#        })
+#    }
+# }
 # #[derive(Debug, Clone, PartialEq, Eq)]
 #enum HttpVersion {
 #    Http10,
@@ -630,18 +645,120 @@ fn main() {
 #        HttpVersion::from_str(s).unwrap_or(HttpVersion::Http10)
 #    }
 #}
+#// 文字列で取得できるように、Displayを実装しておきましょう
+#impl fmt::Display for HttpVersion {
+#    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+#        write!(f, "{}", match self {
+#            Self::Http10 => "HTTP/1.0",
+#            Self::Http11 => "HTTP/1.1",
+#            Self::Http20 => "HTTP/2.0",
+#            Self::Http30 => "HTTP/3.0",
+#        })
+#    }
+#}
+#
+#fn line_parse_http_header(s: &str) -> Option<(&str, &str)> {
+#    // 1行取得する。
+#    let line = s.lines().next()?;
+#    // :で分けて、無駄なスペースの排除。
+#    let mut parts = line.split(':').map(|s| s.trim()).filter(|s| !s.is_empty());
+#
+#    // 2個取って1個目をkey、2個目をvalueと仮定する。 一つでもかけたらheaderじゃないと考える
+#    let key = parts.next()?;
+#    let value = parts.next()?;
+#
+#    // 3個目があったらheaderじゃないと考える
+#    if parts.next() != None {
+#        return None;
+#    }
+#
+#    Some((key, value))
+#}
+#
+#
+#[derive(Debug, Clone, PartialEq, Eq)]
 struct HttpRequest<'a> {
     method: HttpMethod,
     path: HttpPath<'a>,
     version: HttpVersion,
     header: HashMap<&'a str, &'a str>,
-    body: Vec<u8>,
+    body: String,
+}
+impl<'a> HttpRequest<'a> {
+    fn from_str(s: &'a str) -> Option<Self> {
+        // 行取得で行う
+        let mut lines = s.lines();
+
+        // 1行目を取得する
+        let mut parts = {
+            let line = lines.next().unwrap_or("");
+            line.split_whitespace() // スペース単位で分割させる
+        };
+        let method = HttpMethod::from(parts.next().unwrap_or(""));
+        let path = HttpPath::from(parts.next().unwrap_or(""));
+        let version = HttpVersion::from(parts.next().unwrap_or(""));
+        // 余分にあったら無効とする
+        if parts.next() != None {
+            return None;
+        }
+
+        // 2行目(以降)を処理する
+        let mut header: HashMap<&str, &str> = HashMap::new();
+        loop {
+            let line = lines.next().unwrap_or("");
+            match line_parse_http_header(line) {
+                Some((k, v)) => {
+                    _ = header.insert(k, v);
+                    },
+                None => break,
+            }
+        }
+
+        // headerの処理をする
+        let body = lines.collect::<String>();
+
+        Some (HttpRequest{
+            method,
+            path,
+            version,
+            header,
+            body
+        })
+    }
+}
+// 文字列で取得できるように、Displayを実装しておきましょう
+impl<'a> fmt::Display for HttpRequest<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{} {} {}\r\n", self.method, self.method, self.version)?;
+        for (k, v) in &self.header {
+            write!(f, "{}: {}\r\n", k, v)?;
+        }
+        write!(f, "\r\n{}", self.body)
+    }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
 struct HttpResponse<'a> {
     version: HttpVersion,
     status: (u32, &'a str), // レスポンスは番号とメッセージで返す
     header: HashMap<&'a str, &'a str>,
-    body: Vec<u8>,
+    body: String,
+}
+
+// 文字列で取得できるように、Displayを実装しておきましょう
+impl<'a> fmt::Display for HttpResponse<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{} {} {}\r\n", self.version, self.status.0, self.status.1)?;
+        for (k, v) in &self.header {
+            write!(f, "{}: {}\r\n", k, v)?;
+        }
+        write!(f, "\r\n{}", self.body)
+    }
 }
 ```
+
+HttpRequest と HttpResponse の
+
+### 次回
+
+次回は、これらを使ってシングルスレッドサーバーを作ってみようと思います。
