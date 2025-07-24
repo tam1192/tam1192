@@ -10,6 +10,7 @@
 
   - [HTTP であそぼう](./coding-nikki/httpであそぼう/Readme.md)
     - [HTTP であそぼう part1](./coding-nikki/httpであそぼう/1/Readme.md)
+    - [HTTP であそぼう part2](./coding-nikki/httpであそぼう/2/Readme.md)
 
 - [サーバー系](./server-nikki/Readme.md)
 
