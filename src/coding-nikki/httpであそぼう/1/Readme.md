@@ -435,6 +435,12 @@ assert_eq!(
     line_parse_http_header("Content-Type:"),
     None);
 assert_eq!(
+    line_parse_http_header("Content-Type: Content-Type: text/plain"),
+    None);
+assert_eq!(
+    line_parse_http_header("Content-Type: "),
+    None);
+assert_eq!(
     line_parse_http_header("<html><head><title>hello</title></head><body></body></html>"),
     None);
 assert_eq!(
