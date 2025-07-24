@@ -258,6 +258,8 @@ unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
 つまり、new 時点でこの文字でしか作れないように制約をつけましょう。
 
 ```rust
+# use std::fmt;
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct HttpPath<'a>(&'a str);
 
@@ -292,11 +294,19 @@ impl<'a> From<&'a str> for HttpPath<'a> {
     }
 }
 
+// 文字列で取得できるように、Displayを実装しておきましょう
+impl<'a> fmt::Display for HttpPath<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
 # fn main() {
 // 検証してみよう
-assert!(matches!(HttpPath::from_str("/"), Some(_)));
-assert!(matches!(HttpPath::from_str("/aaa/bbb/ccc"), Some(_)));
-assert!(matches!(HttpPath::from_str("こんにちは！"), None));
+assert_eq!(HttpPath::from("/").to_string(), "/".to_string());
+assert_eq!(HttpPath::from("/aaa/bbb/ccc").to_string(), "/aaa/bbb/ccc".to_string());
+assert_eq!(HttpPath::from("").to_string(), "/".to_string());
+assert_eq!(HttpPath::from("こんにちは！").to_string(), "/".to_string());
 # println!("all success! 成功!");
 # }
 ```
@@ -318,6 +328,8 @@ PUT
 これを扱える enum を作れば良いです。 文字列でも生成可能にしましょう。
 
 ```rust
+# use std::fmt;
+#
 #[derive(Debug, Clone, PartialEq, Eq)]
 enum HttpMethod {
     Get,
@@ -342,10 +354,21 @@ impl From<&str> for HttpMethod {
         HttpMethod::from_str(s).unwrap_or(HttpMethod::Get)
     }
 }
+// 文字列で取得できるように、Displayを実装しておきましょう
+impl fmt::Display for HttpMethod {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", match self {
+            Self::Get => "GET",
+            Self::Post => "POST",
+            Self::Put => "PUT",
+            Self::Delete => "DELETE",
+        })
+    }
+}
 
 # fn main() {
 // 検証してみよう
-assert_eq!(HttpMethod::from("get"), HttpMethod::Get);
+assert_eq!(HttpMethod::from("get").to_string(), "GET".to_string());
 assert_eq!(HttpMethod::from("post"), HttpMethod::Post);
 assert_eq!(HttpMethod::from("put"), HttpMethod::Put);
 assert_eq!(HttpMethod::from("delete"), HttpMethod::Delete);
@@ -361,6 +384,8 @@ assert_eq!(HttpMethod::from(""), HttpMethod::Get);
 (1.0 もいらないかも。)
 
 ```rust
+#use std::fmt;
+#
 #[derive(Debug, Clone, PartialEq, Eq)]
 enum HttpVersion {
     Http10,
@@ -385,11 +410,22 @@ impl From<&str> for HttpVersion  {
         HttpVersion::from_str(s).unwrap_or(HttpVersion::Http10)
     }
 }
+// 文字列で取得できるように、Displayを実装しておきましょう
+impl fmt::Display for HttpVersion {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", match self {
+            Self::Http10 => "HTTP/1.0",
+            Self::Http11 => "HTTP/1.1",
+            Self::Http20 => "HTTP/2.0",
+            Self::Http30 => "HTTP/3.0",
+        })
+    }
+}
 
 # fn main() {
 // 検証してみよう
-assert_eq!(HttpVersion::from("HTTP/1.0"), HttpVersion::Http10);
-assert_eq!(HttpVersion::from("HTTP/1.1"), HttpVersion::Http11);
+assert_eq!(HttpVersion::from("Http/1.0").to_string(), "HTTP/1.0".to_string());
+assert_eq!(HttpVersion::from("http/1.1"), HttpVersion::Http11);
 assert_eq!(HttpVersion::from("HTTP/2.0"), HttpVersion::Http20);
 assert_eq!(HttpVersion::from("HTTP/3.0"), HttpVersion::Http30);
 assert_eq!(HttpVersion::from(""), HttpVersion::Http10);
