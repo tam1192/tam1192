@@ -1,9 +1,25 @@
-# HTTP であそぼう part1
+# HTTP であそぼう part1 (★★☆)
 
 作業しながら備忘録として書いてるので、基本内容は適当、思いつきです。
 参考にしないでね。
 
-## とりあえずサッと書いてみた。
+# 本日の 1 曲 🎶
+
+自分がこの記事を書いた時代がわかるように、これから本日の一曲という項目を書いていきます。唐突に追加しました。
+今最も聞いてる曲で選曲してます。
+
+[ガラスハナビ / ねじ式 feat.小春六花](https://www.nicovideo.jp/watch/sm42571626)
+PV の立花ちゃんがかわいいね。
+
+# ★ について (★★★)
+
+★ はこの記事の中でとりあえず読んで欲しいところに 3、自分用のメモレベルで 1 をつけてます。  
+なので、★1 の内容が理解できなくても問題ないです! 書いてるやつが悪い。  
+一方 ★3 は頑張って書きましたので読んで欲しいな〜
+
+# 本題 (★★★)
+
+## とりあえずサッと書いてみた。 (★☆☆)
 
 ```rust
 #use std::{
@@ -158,7 +174,7 @@ impl<'a> From<&'a str> for HttpPath<'a> {
 
 とはいえ普通に便利です。
 
-## HTTP ヘッダーの形について
+## HTTP ヘッダーの形について　(★★★)
 
 nc コマンドで取得してみると...
 
@@ -205,7 +221,7 @@ Content-Type: text/html; charset: utf-8;
 ちなみに、nc は出力以外にも**入力に対応**しているので、リクエスト(GET / HTTP/1.1)と届いたら、それを返すだけでページを返せます。
 (全て書き終わったら、^c もしくは^d で nc を一度終了させたら行きます。 いかない場合もあるかも。)
 
-## HTTP ヘッダー関係を構造体にしてしまおう
+## HTTP ヘッダー関係を構造体にしてしまおう　(★★☆)
 
 上記コードを少し変えて、しっかり構造体にしちましょう。
 
@@ -733,6 +749,99 @@ fn main() {
 
 HttpRequest と HttpResponse の構造体を定義、うち Request は文字列からの生成と出力に対応させた。
 
-### 次回
+# パースの知識 (★★★)
+
+今回文字列のパースがメインだったため、パースの知識を書いておきます。
+
+## lines()と split()と chars()
+
+文字列メソッドであるこれらの関数について、簡単にまとめておきましょう。  
+まず、いずれもこれらの関数はイテレーターを返します。 イテレーターは、オブジェクト指向で頻繁に出てくるデザインパターンの一つです。  
+内容は至ってシンプル。 `Iter`トレイトをつけて`next()`メソッドを実装できれば OK です。
+
+```mermaid
+---
+config:
+  class:
+    hideEmptyMembersBox: true
+---
+classDiagram
+direction TB
+    class Iter {
+	    next()
+    }
+    class ExampleClass {
+	    Index
+	    next()
+    }
+
+	<<Interface>> Iter
+    note for ExampleClass "試しに実装してみる構造体です"
+
+    ExampleClass ..|> Iter
+```
+
+```rust
+struct ExampleClass {
+    index: u64,
+    max: u64, // 上限を決めておく
+}
+
+impl Iterator for ExampleClass {
+    type Item = u64;
+
+    // 76個ぐらいメソッドあるけど、これだけ実装しておけばOK!
+    fn next(&mut self) -> Option<Self::Item> {
+        let res = self.index;
+        if res > self.max {
+            return None;
+        }
+        self.index += 1; // 次のためにindexをずらしておく
+        Some(res)
+    }
+}
+
+fn main() {
+    let ec = ExampleClass{index: 0, max: 10};
+    for i in ec {
+        println!("{}", i);
+    }
+}
+```
+
+この例は実質 Range を作ってます。
+
+`next()`が実装できれば残りの 75 個ができると書いてありますが...
+結局`next()`で解決するので実装は不要です。
+(`find`は next を繰り返しながら条件一致を探す。 `filter`は next を繰り返しながら条件に一致するものだけを収集する。)
+
+rust のイテレーターについては、~~死ぬほどお世話になってます~~この記事がおすすめです。
+[Rust のイテレータの網羅的かつ大雑把な紹介](https://qiita.com/lo48576/items/34887794c146042aebf1)
+
+## index か、文字か
+
+最初の問題はこれです。
+
+```rust, ignore
+let base = "hello";
+
+let index = 3; // インデックス
+let object = 'l'; // 文字
+```
+
+取得
+
+## filter vs find (★★★)
+
+filter と find は機能が似てますが使い所は全く異なります。
+また、chars イテレーターと文字列の find では用途が異なります。　かなりめんどい
+
+###
+
+```
+
+
+## 次回
 
 次回は、これらを使ってシングルスレッドサーバーを作ってみようと思います。
+```
