@@ -8,6 +8,9 @@
   - [手を動かしながら git を使う](./coding-nikki/手を動かしながらgitを使う/Readme.md)
   - [Vue × WASM × Rust—試行錯誤とこれからの展望](./coding-nikki/Vue_×_WASM_×_Rust_試行錯誤とこれからの展望/Readme.md)
 
+  - [HTTP であそぼう](./coding-nikki/httpであそぼう/Readme.md)
+    - [HTTP であそぼう part1](./coding-nikki/httpであそぼう/1/Readme.md)
+
 - [サーバー系](./server-nikki/Readme.md)
 
   - [Ceph-mon って何？](./server-nikki/ceph-monってなに？/Readme.md)
