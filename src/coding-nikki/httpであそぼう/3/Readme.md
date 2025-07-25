@@ -100,10 +100,22 @@ safari のリクエスト分は、ヘッダーが長いですね。
 ってことです。
 
 実行時は[rust の playground](https://play.rust-lang.org/)を使うのですが、まぁ大変になります。
+一応 mdbook の機能で`{{#include file.rs}}`というのが存在するので、うまく活用すれば...
 
-[mdbook-include-rs](https://github.com/bryncooke/mdbook-include-rs)
-これはなかなか期待。 今後使います。
+## 頑張って一つにまとめてみた (★☆☆)
+
+一度頑張って書けばあとはコピペだけだから！！
 
 ```rust
-#![struct!("./../code/src/lib.rs", )]
+// method
+{{#include ./../code/src/http_util/method/mod.rs:6:}}
+// path
+{{#include ./../code/src/http_util/path/mod.rs:6:}}
+// version
+{{#include ./../code/src/http_util/version/mod.rs:6:}}
+// utils
+{{#include ./../code/src/http_util/utils/mod.rs:3:}}
+// request
+{{#include ./../code/src/http_util/utils/mod.rs:3:}}
+
 ```

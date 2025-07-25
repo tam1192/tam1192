@@ -8,7 +8,6 @@ title = "Notepad.md"
 [preprocessor.pagetoc]
 [preprocessor.alerts]
 [preprocessor.katex]
-[preprocessor.include-rs]
 [preprocessor.mermaid]
 command = "mdbook-mermaid"
 
