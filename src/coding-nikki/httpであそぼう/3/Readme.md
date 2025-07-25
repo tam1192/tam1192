@@ -44,7 +44,7 @@ response は少し待って欲しい。
 
 自分か感じる以上にものを書くのは時間がかかるということです。まぁ手書きよりかはましですが...
 
-## テストについて
+## テストについて (★★★)
 
 主に mac 版 safari と curl コマンドのリクエストを書きました。
 
@@ -100,13 +100,17 @@ safari のリクエスト分は、ヘッダーが長いですね。
 ってことです。
 
 実行時は[rust の playground](https://play.rust-lang.org/)を使うのですが、まぁ大変になります。
-一応 mdbook の機能で`{{#include file.rs}}`というのが存在するので、うまく活用すれば...
+これを回避する方法は見つけられませんでした。 とはいえ、そう頻繁に結合コードは出しません...
 
 ## 頑張って一つにまとめてみた (★☆☆)
 
 一度頑張って書けばあとはコピペだけだから！！
 
+<details><summary> 実行するコード全文 </summary>
+
 ```rust
+# use std::{collections::HashMap, fmt};
+#
 // method
 {{#include ./../code/src/http_util/method/mod.rs:6:}}
 // path
@@ -116,6 +120,85 @@ safari のリクエスト分は、ヘッダーが長いですね。
 // utils
 {{#include ./../code/src/http_util/utils/mod.rs:3:}}
 // request
-{{#include ./../code/src/http_util/utils/mod.rs:3:}}
+{{#include ./../code/src/http_util/request/mod.rs:3:}}
 
+fn main() {
+        let request_str = r#"GET / HTTP/1.1
+Host: localhost
+Sec-Fetch-Dest: document
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15
+Upgrade-Insecure-Requests: 1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Accept-Language: ja
+Priority: u=0, i
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+"#;
+    let request = HttpRequest::from_str(request_str).unwrap();
+    assert_eq!(request.method, HttpMethod::Get);
+    assert_eq!(request.path, HttpPath::from("/"));
+    assert_eq!(request.version, HttpVersion::Http11);
+    assert_eq!(request.header.get("Host"), Some(&"localhost"));
+    assert_eq!(
+        request.header.get("User-Agent"),
+        Some(
+            &"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15"
+        )
+    );
+    assert_eq!(
+        request.header.get("Accept"),
+        Some(&"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+    );
+    assert_eq!(request.body, "");
+}
 ```
+
+</details>
+
+## 実際にテストしてみた。 (★★☆)
+
+```rust, ignore
+        let request_str = r#"GET / HTTP/1.1
+Host: localhost
+Sec-Fetch-Dest: document
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15
+Upgrade-Insecure-Requests: 1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Accept-Language: ja
+Priority: u=0, i
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+"#;
+    let request = HttpRequest::from_str(request_str).unwrap();
+    assert_eq!(request.method, HttpMethod::Get);
+    assert_eq!(request.path, HttpPath::from("/"));
+    assert_eq!(request.version, HttpVersion::Http11);
+    assert_eq!(request.header.get("Host"), Some(&"localhost"));
+    assert_eq!(
+        request.header.get("User-Agent"),
+        Some(
+            &"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15"
+        )
+    );
+    assert_eq!(
+        request.header.get("Accept"),
+        Some(&"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+    );
+    assert_eq!(request.body, "");
+```
+
+`assert!()`と`assert_eq!()`という関数をさりげなく使ってきましたが、`assert!()`は真偽値`bool`で`true`の場合、`assert_eq!()`は二つ以上の引数を取り、どちらも値が一致した場合は成功、それ以外は `panic!()` を起こします。
+すなわち、**想定している条件と異なる結果が関数から戻ってきたら、テストは失敗します。**
+
+成功するということ、すなわち**想定通りの動作**であるのですね。 その想定は**HTTP で通信すること**です。
+
+> [!TIP]
+> 動くコード、コード全文は前回の項目にあります。(隠してあります。)
+
+##
