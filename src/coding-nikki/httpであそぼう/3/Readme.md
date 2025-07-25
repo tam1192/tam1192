@@ -107,7 +107,15 @@ safari のリクエスト分は、ヘッダーが長いですね。
 一度頑張って書けばあとはコピペだけだから！！
 
 ```rust
-{{#include ./../code/src/http_util/method.rs:2:40}}
-{{#include ./../code/src/http_util/path.rs:3:50}}
+// method
+{{#include ./../code/src/http_util/method/mod.rs:6:}}
+// path
+{{#include ./../code/src/http_util/path/mod.rs:6:}}
+// version
+{{#include ./../code/src/http_util/version/mod.rs:6:}}
+// utils
+{{#include ./../code/src/http_util/utils/mod.rs:3:}}
+// request
+{{#include ./../code/src/http_util/utils/mod.rs:3:}}
 
 ```
