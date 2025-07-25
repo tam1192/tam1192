@@ -98,6 +98,7 @@ impl Write for TcpStream<'_> {
 
     fn flush(&mut self) -> Result<()> {
         println!("Flushing data: {:?}", self.write_data);
+        self.is_flushed = true;
         Ok(())
     }
 }
