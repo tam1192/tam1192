@@ -1,4 +1,4 @@
-use super::*;
+use super::{utils::*, *};
 use std::{collections::HashMap, fmt};
 #[cfg(test)]
 mod tests;
@@ -32,7 +32,7 @@ impl<'a> HttpResponse<'a> {
         let mut header: HashMap<&str, &str> = HashMap::new();
         loop {
             let line = lines.next().unwrap_or("");
-            match utils::line_parse_http_header(line) {
+            match line_parse_http_header(line) {
                 Some((k, v)) => {
                     _ = header.insert(k, v);
                 }
