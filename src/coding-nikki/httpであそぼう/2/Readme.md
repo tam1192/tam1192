@@ -43,8 +43,124 @@
 
 テスト用に`get_write_data()`メソッドを提供してます。 これは`flush()`後でないと`None`を返します！
 
-## 終わり
+## 実際に使ってみる
 
-え、これだけかよ！  
-はい。 前回内容が濃すぎたのを反省し、今回はここまでです。  
-次回は擬似通信オブジェクトを活用して通信を楽しみたいと思います。
+あまりにも内容が薄かったので、流石に善処することとします。 (この記事は一回更新しました。)
+実際に動かすとこんな感じです。
+
+(request を来るとき cl -> sv)
+
+```rust,ignore
+// listenerを開く
+let mut listener = TcpListener::bind("127.0.0.1:80").unwrap();
+let data = b"GET / HTTP/1.1\r\nhost: localhost\r\naccept: */*\r\n\r\n";
+listener.add_request(data);
+
+// (本来はループ分) 通信がきたらstreamが出てくる。
+let (mut stream, _) = listener.accept().unwrap();
+// データを受け取ってみる
+let mut buf = [0u8;1024];
+let size = stream.read(&mut buf).unwrap();
+let buf = &buf[0..size];
+println!("{}", String::from_utf8_lossy(&buf));
+
+// assert_eqで確かめる
+assert_eq!(buf, data);
+```
+
+(response 送るとき sv -> cl)
+
+```rust,ignore
+// listenerを開く
+let mut listener = TcpListener::bind("127.0.0.1:80").unwrap();
+listener.add_request("\r\n".as_bytes());
+
+// (本来はループ分) 通信がきたらstreamが出てくる。
+let (mut stream, _) = listener.accept().unwrap();
+// データを送ってみる
+let data = "HTTP/1.1 200 Ok\r\nContent-Type: text/plain\r\n\r\nhello!\r\n";
+_ = stream.write(data.as_bytes());
+_ = stream.flush(); // 忘れずに!
+
+assert_eq!(stream.get_write_data().unwrap(), data.as_bytes());
+```
+
+<details><summary>実際に動作するコード</summary>
+
+```rust,editable
+
+{{#include ./code/src/vnet/mod.rs}}
+
+fn main() {
+    // 送るとき
+    {
+        // listenerを開く
+        let mut listener = TcpListener::bind("127.0.0.1:80").unwrap();
+        let data = b"GET / HTTP/1.1\r\nhost: localhost\r\naccept: */*\r\n\r\n";
+        listener.add_request(data);
+
+        // (本来はループ分) 通信がきたらstreamが出てくる。
+        let (mut stream, _) = listener.accept().unwrap();
+        // データを受け取ってみる
+        let mut buf = [0u8;1024];
+        let size = stream.read(&mut buf).unwrap();
+        let buf = &buf[0..size];
+        println!("{}", String::from_utf8_lossy(&buf));
+
+        // assert_eqで確かめる
+        assert_eq!(buf, data);
+    }
+    {
+        // listenerを開く
+        let mut listener = TcpListener::bind("127.0.0.1:80").unwrap();
+        listener.add_request("\r\n".as_bytes());
+
+        // (本来はループ分) 通信がきたらstreamが出てくる。
+        let (mut stream, _) = listener.accept().unwrap();
+        // データを送ってみる
+        let data = "HTTP/1.1 200 Ok\r\nContent-Type: text/plain\r\n\r\nhello!\r\n";
+        _ = stream.write(data.as_bytes());
+        _ = stream.flush(); // 忘れずに!
+
+        assert_eq!(stream.get_write_data().unwrap(), data.as_bytes());
+    }
+}
+
+```
+
+</details>
+
+## buf の取り扱いについて
+
+少し前に buf の取り扱いで注意するべき内容を載せた記事を書きましたが、おさらい。
+
+- スタック上におくの
+- 0 埋めしておく
+
+```rust
+let buf = [0u8; 10];
+```
+
+その記事は[こちら](../../../ひとくちメモ/rustでbufferを作る時は)
+
+なお、この擬似 buffer を使っても当然、その問題は起きるので注意です！
+
+```rust,ignore
+// (本来はループ分) 通信がきたらstreamが出てくる。
+let (mut stream, _) = listener.accept().unwrap();
+// データを受け取ってみる
+let mut buf = Vec::new(); // 動作しない！
+let size = stream.read(&mut buf).unwrap();
+let buf = &buf[0..size];
+println!("{}", String::from_utf8_lossy(&buf));
+```
+
+> [!TIP]
+> 上の「実際に動作するコード」は編集できるので、  
+> 試してみてください！
+> ![変更例](./figure01.png)
+
+## まとめ
+
+擬似的に再現可能な TCPListener と TCPSocket を作った。 テストなどで応用が効きそうだ。  
+最近可不ェインが不足していることがわかった。
