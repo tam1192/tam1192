@@ -9,9 +9,13 @@
   - [Vue × WASM × Rust—試行錯誤とこれからの展望](./coding-nikki/Vue_×_WASM_×_Rust_試行錯誤とこれからの展望/Readme.md)
 
   - [HTTP であそぼう](./coding-nikki/httpであそぼう/Readme.md)
+
     - [HTTP であそぼう part1](./coding-nikki/httpであそぼう/1/Readme.md)
     - [HTTP であそぼう part2](./coding-nikki/httpであそぼう/2/Readme.md)
     - [HTTP であそぼう part3](./coding-nikki/httpであそぼう/3/Readme.md)
+
+  - [Minecraft 系](./coding-nikki/mc/Readme.md)
+    - [基礎編 part1](./coding-nikki/mc/1/Readme.md)
 
 - [サーバー系](./server-nikki/Readme.md)
 
