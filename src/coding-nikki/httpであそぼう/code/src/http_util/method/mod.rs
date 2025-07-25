@@ -1,4 +1,8 @@
 use std::fmt;
+
+#[cfg(test)]
+mod tests;
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum HttpMethod {
     Get,
@@ -38,6 +42,3 @@ impl fmt::Display for HttpMethod {
         )
     }
 }
-
-#[cfg(test)]
-mod tests;

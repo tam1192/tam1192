@@ -1,5 +1,8 @@
 use std::fmt;
 
+#[cfg(test)]
+mod tests;
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct HttpPath<'a>(&'a str);
 
@@ -48,6 +51,3 @@ impl<'a> fmt::Display for HttpPath<'a> {
         write!(f, "{}", self.0)
     }
 }
-
-#[cfg(test)]
-mod tests;

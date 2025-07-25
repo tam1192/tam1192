@@ -1,5 +1,8 @@
 use std::fmt;
 
+#[cfg(test)]
+mod tests;
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum HttpVersion {
     Http10,
@@ -39,6 +42,3 @@ impl fmt::Display for HttpVersion {
         )
     }
 }
-
-#[cfg(test)]
-mod tests;
