@@ -24,6 +24,7 @@
   - [ループバックアドレスで IP 節約](./freewrite/ループバックアドレスでIP節約/Readme.md)
   - [algorithm_rs について](./freewrite/algorithm_rs/Readme.md)
   - [外は暑い](./freewrite/外は暑い/Readme.md)
+  - [携帯電話はもはや電話じゃない](./freewrite/携帯電話はもはや電話じゃない/Readme.md)
 
 - [ひとくちメモ](./ひとくちメモ/Readme.md)
   - [rust で buffer を作る時は](./ひとくちメモ/rustでbufferを作る時は/Readme.md)
