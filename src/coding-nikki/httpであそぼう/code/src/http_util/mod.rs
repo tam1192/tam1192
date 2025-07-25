@@ -10,4 +10,7 @@ pub use version::HttpVersion;
 pub mod request;
 pub use request::HttpRequest;
 
+pub mod response;
+pub use response::HttpResponse;
+
 pub mod utils;

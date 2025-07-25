@@ -42,7 +42,7 @@ impl<'a> HttpRequest<'a> {
         // headerの処理をする
         let body = lines.collect::<String>();
 
-        Some(HttpRequest {
+        Some(Self {
             method,
             path,
             version,
