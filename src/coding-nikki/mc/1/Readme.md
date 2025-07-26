@@ -93,7 +93,28 @@ gradle も [**バージョン依存激しい**](https://docs.gradle.org/current/
 
 この辺のコマンドで入るかと。
 
+> [!WARNING]
+> 流石に適当言ってられないから、docker で無理やり`apt install -y gradle`したんだけど、**ぼくのしってる挙動とちがうんだけどー！**  
+> (gradle init を実行したら一発でプロジェクトができた。 test など選択できず　)  
+> gradle は**バージョン、環境によって大きく左右する物ですので注意!!!**
+
 > [!TIP]
 > ああ、[**windows をお使いで？**](https://learn.microsoft.com/ja-jp/windows/wsl/install)  
 > [wslg](https://thinkit.co.jp/article/37792)も参考のこと  
 > これで(Linux 環境が)できた。
+
+## 色々触れてみる
+
+`gradle init`でプロジェクトを生成できる。
+
+```bash
+WORKDIR=$(mktemp -d);
+cd $WORKDIR;
+
+# gradleプロジェクトを初期化する
+gradle init
+```
+
+前述した通り、ここの動作が異なる。
+
+apt
