@@ -158,6 +158,8 @@ Connection: keep-alive
 
 </details>
 
+...これ mdbook でレンダリング後に手動でコピーすればよくね？
+
 ## 実際にテストしてみた。 (★★☆)
 
 ```rust, ignore
