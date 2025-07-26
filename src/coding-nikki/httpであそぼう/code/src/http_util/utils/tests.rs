@@ -1,7 +1,6 @@
-use super::*;
 #[cfg(test)]
 pub mod tests_line_parse_http_header {
-    use super::*;
+    use super::super::*;
 
     #[test]
     fn success_curl_header() {
