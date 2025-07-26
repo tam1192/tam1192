@@ -7,7 +7,7 @@ mod tests;
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct HttpRequest<'a> {
     pub method: HttpMethod,
-    pub path: HttpPath<'a>,
+    pub path: HttpPath,
     pub version: HttpVersion,
     pub header: HashMap<&'a str, &'a str>,
     pub body: String,
@@ -15,7 +15,7 @@ pub struct HttpRequest<'a> {
 impl<'a> HttpRequest<'a> {
     pub fn new(
         method: HttpMethod,
-        path: HttpPath<'a>,
+        path: HttpPath,
         version: HttpVersion,
         header: HashMap<&'a str, &'a str>,
         body: String,
@@ -38,7 +38,7 @@ impl<'a> HttpRequest<'a> {
             line.split_whitespace() // スペース単位で分割させる
         };
         let method = HttpMethod::from_str(parts.next().unwrap_or(""))?;
-        let path = HttpPath::from_str(parts.next().unwrap_or(""))?;
+        let path = HttpPath::from_str(String::from(parts.next().unwrap_or("")))?;
         let version = HttpVersion::from_str(parts.next().unwrap_or(""))?;
         // 余分にあったら無効とする
         if parts.next().is_some() {

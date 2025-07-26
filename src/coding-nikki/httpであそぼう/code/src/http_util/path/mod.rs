@@ -4,11 +4,11 @@ use std::fmt;
 mod tests;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct HttpPath<'a>(&'a str);
+pub struct HttpPath(String);
 
-impl<'a> HttpPath<'a> {
+impl HttpPath {
     // 許可された文字列のみで作る
-    pub fn from_str(s: &'a str) -> Option<Self> {
+    pub fn from_str(s: String) -> Option<Self> {
         // 文字単位に分解します
         let mut c = s.chars();
 
@@ -40,13 +40,20 @@ impl<'a> HttpPath<'a> {
 }
 
 // Fromトレイトもつけて、文字列から簡単に変換できるようにしましょう
-impl<'a> From<&'a str> for HttpPath<'a> {
-    fn from(s: &'a str) -> Self {
-        HttpPath::from_str(s).unwrap_or(HttpPath("/")) // デフォルト値は /
+impl From<&str> for HttpPath {
+    fn from(s: &str) -> Self {
+        let s = s.to_string();
+        HttpPath::from(s)
     }
 }
+impl From<String> for HttpPath {
+    fn from(s: String) -> Self {
+        HttpPath::from_str(s).unwrap_or(HttpPath(String::from("/"))) // デフォルト値は /
+    }
+}
+
 // 文字列で取得できるように、Displayを実装しておきましょう
-impl<'a> fmt::Display for HttpPath<'a> {
+impl<'a> fmt::Display for HttpPath {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.0)
     }
