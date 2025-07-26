@@ -4,6 +4,10 @@ HTTP を理解しつつ、HTTP サーバーを地道に作ります。
 
 [なおこの本に惹かれたのはいうまでもありません。](https://doc.rust-jp.rs/book-ja/ch20-00-final-project-a-web-server.html)
 
+# 作ったコードを置いてます
+
+[github]にて作ってきたコードをまとめたものを置いてます。 clone しずらい環境にあり大変申し訳な
+
 ## 基礎知識
 
 ### rust について
