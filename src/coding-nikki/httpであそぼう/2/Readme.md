@@ -29,7 +29,7 @@
 主な用途は記事やテスト用です。
 
 ```rust, ignore
-{{#include ./code/src/vnet/mod.rs}}
+{{#include ./../code/src/vnet/mod.rs}}
 ```
 
 長大なコードですが、その大半は~~AI 補完~~trait を実装すれば終わります。
@@ -89,7 +89,7 @@ assert_eq!(stream.get_write_data().unwrap(), data.as_bytes());
 
 ```rust,editable
 
-{{#include ./code/src/vnet/mod.rs}}
+{{#include ./../code/src/vnet/mod.rs}}
 
 fn main() {
     // 送るとき
