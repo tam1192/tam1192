@@ -22,11 +22,85 @@ java について、openjdk がおすすめです。 といってもたくさん
 - [azul](https://www.azul.com/downloads/?package=jdk#zulu)  
   arm 系で動作する mac ではこれがおすすめです。
 
-# java の入れ方
+> [!NOTE]
+> ここでインストールしておく必要はありません。 sdkman でまとめて導入可能です。
+
+## sdkman を入れてみる
+
+[sdkman](https://sdkman.io)  
+最近人気な、シェルスクリプトを用いて全自動で入れてくれるやつでインストールできるのかぁ。
+
+```sh
+apt install -y unzip # 必要とのこと
+curl -s "https://get.sdkman.io" | bash
+
+sdk install gradle # graldeを入れる
+```
+
+```
+> gradle -v
+Welcome to Gradle 8.14.2!
+
+Here are the highlights of this release:
+ - Java 24 support
+ - GraalVM Native Image toolchain selection
+ - Enhancements to test reporting
+ - Build Authoring improvements
+
+For more details see https://docs.gradle.org/8.14.2/release-notes.html
+
+
+------------------------------------------------------------
+Gradle 8.14.2
+------------------------------------------------------------
+
+Build time:    2025-06-05 13:32:01 UTC
+Revision:      30db2a3bdfffa9f8b40e798095675f9dab990a9a
+
+Kotlin:        2.0.21
+Groovy:        3.0.24
+Ant:           Apache Ant(TM) version 1.10.15 compiled on August 25 2024
+Launcher JVM:  21.0.8 (Ubuntu 21.0.8+9-Ubuntu-0ubuntu124.04.1)
+Daemon JVM:    /usr/lib/jvm/java-21-openjdk-arm64 (no JDK specified, using current Java home)
+OS:            Linux 6.10.14-linuxkit aarch64
+
+
+> which gradle
+/root/.sdkman/candidates/gradle/current/bin/gradle
+> echo $PATH
+/root/.sdkman/candidates/gradle/current/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+```
+
+イイネ 👍
+
+> [!NOTE]  
+> `which sdk`を試したがなぜだかコマンドが出なかった。 set など調べると、**シェルスクリプトの関数として動いている**ようだ。
+
+なんと java も入る。
+
+```
+sdk install java 21.0.8-zulu
+```
+
+## 色々触れてみる
+
+`gradle init`でプロジェクトを生成できる。
+
+```bash
+WORKDIR=$(mktemp -d);
+cd $WORKDIR;
+
+# gradleプロジェクトを初期化する
+gradle init
+```
+
+# 以下過去の話
+
+## java の入れ方
 
 JAVA_HOME の設定などをお勧めされているのや、PATH を設定しているのをよく見ますが、あれ意味を理解していれば効率よく運用できるはずです。
 
-## PATH とは(AI による説明)
+### PATH とは(AI による説明)
 
 - PATH は環境変数のひとつで、OS に「どこにコマンドを探しに行くか」を教える役割を担っています。
 - コマンド実行時、PATH に登録されたディレクトリの順序に従って、最初に見つかった同名ファイル・コマンドが使われます。
@@ -60,12 +134,12 @@ echo $PATH # PATHの内容もこれで確認可能
 てか、シェルの変数と環境変数、ごっちゃになりそうだな。なんで export って名前なんだろう。
 しかもシェルはアクセス方法が変数、環境変数ともに差がないんだよなぁ。
 
-## JAVA_HOME について
+### JAVA_HOME について
 
 最近使ってないからわからなくなった。 考えるのをやめた。思考停止。  
 つまり不要ってことだ。
 
-## direnv を使おう
+### direnv を使おう
 
 - [direnv](https://github.com/direnv/direnv)  
   ディレクトリごとに環境変数を変えられるのが特徴。 マインクラフトは java1.12 以降 jre/jdk8 が必要、確か 1.19 以降は jre/jdk17、1.20 以降は jre/jdk21 が必要である。  
@@ -88,33 +162,19 @@ java 版の cargo です。 これを使えば外部コードの連携から、�
 gradle も [**バージョン依存激しい**](https://docs.gradle.org/current/userguide/compatibility.html)です。  
 とりあえず最新版入れてればなんとかなりますが...
 
-- `brew install gradle`
-- `apt install gradle`
+- `brew install gradle` (sdkman を使う場合は sdkman を入れてみるの項目で説明)
+- ~~`apt install gradle`~~ (sdkman を入れてみるの項目で説明)
 
 この辺のコマンドで入るかと。
 
-> [!WARNING]
+> [!CAUTION]
 > 流石に適当言ってられないから、docker で無理やり`apt install -y gradle`したんだけど、**ぼくのしってる挙動とちがうんだけどー！**  
-> (gradle init を実行したら一発でプロジェクトができた。 test など選択できず　)  
-> gradle は**バージョン、環境によって大きく左右する物ですので注意!!!**
+> ...  
+> `gradle -v`  
+> `Gradle 4.4.1`  
+> **古すぎるじゃねぇか！！！**
 
 > [!TIP]
 > ああ、[**windows をお使いで？**](https://learn.microsoft.com/ja-jp/windows/wsl/install)  
 > [wslg](https://thinkit.co.jp/article/37792)も参考のこと  
 > これで(Linux 環境が)できた。
-
-## 色々触れてみる
-
-`gradle init`でプロジェクトを生成できる。
-
-```bash
-WORKDIR=$(mktemp -d);
-cd $WORKDIR;
-
-# gradleプロジェクトを初期化する
-gradle init
-```
-
-前述した通り、ここの動作が異なる。
-
-apt
