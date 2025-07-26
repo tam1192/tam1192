@@ -56,3 +56,12 @@ mac 版パッケージマネージャー。 apt や pacman に例えられるが
   `brew snap pip cargo sdkman! npm` など
 
 brew はシステムファイルとは独立しており、最新版だと`/opt/homebrew`でパッケージを管理する。
+
+## ご意見募集中
+
+[当サイトのリポジトリ](https://github.com/tam1192/notepad.md/issues)にて、issue 募集中です!
+
+- 投稿には github アカウントが必要です。
+- テンプレート用意してます。 ぜひ活用してください。
+  - [感想用テンプレート](https://github.com/tam1192/tam1192/issues/new?template=感想-コメント.md)
+  - [誤解を招く内容への指摘](https://github.com/tam1192/tam1192/issues/new?template=誤解を招く内容への指摘.md)

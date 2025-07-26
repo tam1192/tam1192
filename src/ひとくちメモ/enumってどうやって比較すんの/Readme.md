@@ -202,3 +202,12 @@ fn main() {
 > ```
 >
 > こいつはポインタを操作して入れ替える。 わざわざメモリを初期化しないので**動作が早いのだ**
+
+## ご意見募集中
+
+[当サイトのリポジトリ](https://github.com/tam1192/notepad.md/issues)にて、issue 募集中です!
+
+- 投稿には github アカウントが必要です。
+- テンプレート用意してます。 ぜひ活用してください。
+  - [感想用テンプレート](https://github.com/tam1192/tam1192/issues/new?template=感想-コメント.md)
+  - [誤解を招く内容への指摘](https://github.com/tam1192/tam1192/issues/new?template=誤解を招く内容への指摘.md)

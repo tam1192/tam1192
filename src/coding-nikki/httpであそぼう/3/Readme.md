@@ -278,3 +278,17 @@ fn main() {
 このページ書くだけで 2 日かけました。 長かった。  
 何より**勢いでコードを書くのは失敗を伴いますね**。 まぁ若干反省。  
 とはいえ、これを実際の TCP/IP に置き換えれば通信ができそうです。 それを次回確認しましょう。
+
+## ご意見募集中
+
+[当サイトのリポジトリ](https://github.com/tam1192/notepad.md/issues)にて、issue 募集中です!
+
+- 投稿には github アカウントが必要です。
+- テンプレート用意してます。 ぜひ活用してください。
+  - [感想用テンプレート](https://github.com/tam1192/tam1192/issues/new?template=感想-コメント.md)
+  - [誤解を招く内容への指摘](https://github.com/tam1192/tam1192/issues/new?template=誤解を招く内容への指摘.md)
+
+# 作ったコードを置いてます
+
+[github](https://github.com/tam1192/experiments-http-server.rs)にて作ってきたコードをまとめたものを置いてます。  
+よかったら参考に...できるかな
