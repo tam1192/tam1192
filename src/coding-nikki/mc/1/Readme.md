@@ -22,11 +22,11 @@ java について、openjdk がおすすめです。 といってもたくさん
 - [azul](https://www.azul.com/downloads/?package=jdk#zulu)  
   arm 系で動作する mac ではこれがおすすめです。
 
-## java の入れ方
+# java の入れ方
 
 JAVA_HOME の設定などをお勧めされているのや、PATH を設定しているのをよく見ますが、あれ意味を理解していれば効率よく運用できるはずです。
 
-### PATH とは(AI による説明)
+## PATH とは(AI による説明)
 
 - PATH は環境変数のひとつで、OS に「どこにコマンドを探しに行くか」を教える役割を担っています。
 - コマンド実行時、PATH に登録されたディレクトリの順序に従って、最初に見つかった同名ファイル・コマンドが使われます。
@@ -60,11 +60,40 @@ echo $PATH # PATHの内容もこれで確認可能
 てか、シェルの変数と環境変数、ごっちゃになりそうだな。なんで export って名前なんだろう。
 しかもシェルはアクセス方法が変数、環境変数ともに差がないんだよなぁ。
 
-### JAVA_HOME について
+## JAVA_HOME について
 
-最近使ってないからわからなくなった。 考えるのをやめた。思考停止
+最近使ってないからわからなくなった。 考えるのをやめた。思考停止。  
+つまり不要ってことだ。
 
-## gradle について
+## direnv を使おう
+
+- [direnv](https://github.com/direnv/direnv)  
+  ディレクトリごとに環境変数を変えられるのが特徴。 マインクラフトは java1.12 以降 jre/jdk8 が必要、確か 1.19 以降は jre/jdk17、1.20 以降は jre/jdk21 が必要である。  
+  これは mod 開発時にも影響を及ぼす。 そのときに使えるのが direnv である。
+
+> [!NOTE]
+> ただし、後述する gradle をうまく活用すれば問題ないと思うけれど  
+> [Toolchains for JVM projects](https://docs.gradle.org/current/userguide/toolchains.html#toolchains)  
+> ...ん？  
+> .......ん？？？？  
+> ![jdkが自動ダウンロードされるらしい](./pic1.jpg)
+
+# gradle について
 
 java 版の cargo です。 これを使えば外部コードの連携から、ビルド、テストまで、行ってくれます。 多分優れもの。  
 [tmp](../../../freewrite/tmp使えや!)にプロジェクトを作ってみましょう。
+
+## gradle を導入してみよう。
+
+gradle も [**バージョン依存激しい**](https://docs.gradle.org/current/userguide/compatibility.html)です。  
+とりあえず最新版入れてればなんとかなりますが...
+
+- `brew install gradle`
+- `apt install gradle`
+
+この辺のコマンドで入るかと。
+
+> [!TIP]
+> ああ、[**windows をお使いで？**](https://learn.microsoft.com/ja-jp/windows/wsl/install)  
+> [wslg](https://thinkit.co.jp/article/37792)も参考のこと  
+> これで(Linux 環境が)できた。
