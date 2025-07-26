@@ -109,7 +109,13 @@ safari のリクエスト分は、ヘッダーが長いですね。
 <details><summary> 実行するコード全文 </summary>
 
 ```rust
-# use std::{collections::HashMap, fmt};
+# use std::{
+#     collections::{VecDeque,HashMap},
+#     io::{Read, Result, Write},
+#     net::{SocketAddr, ToSocketAddrs},
+#     thread,fmt
+# };
+
 #
 // method
 {{#include ./../code/src/http_util/method/mod.rs:6:}}
@@ -121,6 +127,8 @@ safari のリクエスト分は、ヘッダーが長いですね。
 {{#include ./../code/src/http_util/utils/mod.rs:3:}}
 // request
 {{#include ./../code/src/http_util/request/mod.rs:3:}}
+// vnet
+{{#include ./../code/src/vnet/mod.rs:8:}}
 
 fn main() {
         let request_str = r#"GET / HTTP/1.1
