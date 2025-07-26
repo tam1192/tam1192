@@ -5,12 +5,26 @@ mod tests;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct HttpResponse<'a> {
-    version: HttpVersion,
-    status: (u16, &'a str), // (ステータスコード, ステータスメッセージ)
-    header: HashMap<&'a str, &'a str>,
-    body: String,
+    pub version: HttpVersion,
+    pub status: (u16, &'a str), // (ステータスコード, ステータスメッセージ)
+    pub header: HashMap<&'a str, &'a str>,
+    pub body: String,
 }
 impl<'a> HttpResponse<'a> {
+    pub fn new(
+        version: HttpVersion,
+        status: (u16, &'a str),
+        header: HashMap<&'a str, &'a str>,
+        body: String,
+    ) -> Self {
+        Self {
+            version,
+            status,
+            header,
+            body,
+        }
+    }
+
     pub fn from_str(s: &'a str) -> Option<Self> {
         // 行取得で行う
         let mut lines = s.lines();

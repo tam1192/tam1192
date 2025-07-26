@@ -6,13 +6,28 @@ mod tests;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct HttpRequest<'a> {
-    method: HttpMethod,
-    path: HttpPath<'a>,
-    version: HttpVersion,
-    header: HashMap<&'a str, &'a str>,
-    body: String,
+    pub method: HttpMethod,
+    pub path: HttpPath<'a>,
+    pub version: HttpVersion,
+    pub header: HashMap<&'a str, &'a str>,
+    pub body: String,
 }
 impl<'a> HttpRequest<'a> {
+    pub fn new(
+        method: HttpMethod,
+        path: HttpPath<'a>,
+        version: HttpVersion,
+        header: HashMap<&'a str, &'a str>,
+        body: String,
+    ) -> Self {
+        Self {
+            method,
+            path,
+            version,
+            header,
+            body,
+        }
+    }
     pub fn from_str(s: &'a str) -> Option<Self> {
         // 行取得で行う
         let mut lines = s.lines();
