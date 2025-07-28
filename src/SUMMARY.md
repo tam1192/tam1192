@@ -16,6 +16,7 @@
 
   - [Minecraft 系](./coding-nikki/mc/Readme.md)
     - [基礎編 part1](./coding-nikki/mc/1/Readme.md)
+    - [基礎編 part2](./coding-nikki/mc/2/Readme.md)
 
 - [サーバー系](./server-nikki/Readme.md)
 
