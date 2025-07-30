@@ -91,3 +91,99 @@ kotlin の場合は MutableList で返すことになります。 とりあえ�
 
 > [!NOTE]
 > rust の使い勝手に近いならそれは**メリット**ですよね！(圧)
+
+### onTabComplete が呼ばれるタイミング
+
+実際に調べてみます。
+
+```kt
+package org.adw39.examplePlugin2
+
+import org.adw39.examplePlugin2.commands.ExampleCommand
+import org.bukkit.plugin.java.JavaPlugin
+
+class ExamplePlugin2 : JavaPlugin() {
+
+    override fun onEnable() {
+        getCommand("example")?.setExecutor(ExampleCommand())
+    }
+
+    override fun onDisable() {
+        // Plugin shutdown logic
+    }
+}
+```
+
+```
+package org.adw39.examplePlugin2.commands
+
+import org.bukkit.command.Command
+import org.bukkit.command.CommandSender
+import org.bukkit.command.TabExecutor
+
+class ExampleCommand : TabExecutor {
+    override fun onTabComplete(
+        p0: CommandSender,
+        p1: Command,
+        p2: String,
+        p3: Array<out String>?
+    ): List<String?>? {
+        p3?.forEach {
+            println(it)
+        }
+        return null
+    }
+
+    override fun onCommand(
+        p0: CommandSender,
+        p1: Command,
+        p2: String,
+        p3: Array<out String>?
+    ): Boolean {
+        return true
+    }
+
+}
+```
+
+> [!TIP]
+> array は配列なので、forEach で中身を分解して出力します。
+
+> [!TIP]
+> 内部に Logger オブジェクトが存在しますが、println も使用できます。(多分非推奨)
+
+`resources/plugin.yml`
+
+```yaml
+name: MyPaperPlugin
+version: 0.0.1
+main: org.adw39.examplePlugin2.ExamplePlugin2
+description: An example plugin
+author: nikki
+website: https://adw39.org
+api-version: "1.21.0"
+commands:
+  example:
+    description: テスト
+    usage: "/example <arg>"
+    permission: org.adw39.examplePlugin2.example
+```
+
+> [!NOTE]
+> ファイルの位置は、package 文をみていただくのが早いかと思います。  
+> 複雑になり始めたら tree を載せます。
+
+> [!WARNING]  
+> **plugin.yaml の編集を忘れずに!!**
+
+### 実行結果
+
+`onTabComplete`は、**キー入力を受ける度に呼び出される**ようです！ **tab を押されてから呼び出すわけではない模様**  
+これは深刻な問題です。 もし`onTabComplete`のロジックを複雑にしてしまえば、**キー入力を受ける度にサーバーが重くなる可能性がある**ことを意味します。
+
+> [!NOTE]
+> と、書いたけど実際どーなんでしょうねぇ。
+
+## ブロック名で補完させる
+
+`worldedit`のようなプラグインを作りたくなった場合、ブロック名の補完　は必須です。
