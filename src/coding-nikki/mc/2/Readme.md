@@ -2,6 +2,15 @@
 
 前回 sdkman が使いやすいというお話を致しました。
 
+# 追記
+
+**投稿日とバージョンについて**  
+後述しますが、gradle はバージョンによっての変化が激しいため、先に日程と gradle の最新版の確認をお願いします。  
+なお、日記さん側でも変化があったら修正するよう心掛けるつもりではありますが、放置する可能性もあるのでよろしくお願いします。
+
+- 投稿日: 2025/07/28
+- Gradle の Version: `Gradle 8.14.2`
+
 # 🎵 本日の一曲
 
 <iframe width="312" height="176" src="https://ext.nicovideo.jp/thumb/sm45058742" scrolling="no" style="border:solid 1px #ccc;" frameborder="0"><a href="https://www.nicovideo.jp/watch/sm45058742">オデッセイ / 星界</a></iframe>
