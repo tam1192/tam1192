@@ -3,6 +3,16 @@
 前回 sdkman が使いやすいというお話を致しました。  
 そして、コマンドラインの gradle で、プロジェクトを作成したのでした。
 
+# 投稿日とバージョンについて
+
+後述しますが、gradle はバージョンによっての変化が激しいため、先に日程と gradle の最新版の確認をお願いします。  
+なお、日記さん側でも変化があったら修正するよう心掛けるつもりではありますが、放置する可能性もあるのでよろしくお願いします。
+
+- 投稿日: 2025/07/28
+- Gradle の Version: `Gradle 8.14.2`
+- IntelliJ Idea の Version: `IntelliJ IDEA 2025.1.4.1 (Ultimate Edition)`
+- そもそも使ってる OS: `MacOS 15.5（24F74）`
+
 # 🎵 本日の一曲
 
 <iframe width="312" height="176" src="https://ext.nicovideo.jp/thumb/sm43302570" scrolling="no" style="border:solid 1px #ccc;" frameborder="0"><a href="https://www.nicovideo.jp/watch/sm43302570">魔法少女はお見通し / 星界,羽累 - 織井辺コフィ</a></iframe>
