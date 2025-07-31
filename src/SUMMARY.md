@@ -23,6 +23,7 @@
 - [サーバー系](./server-nikki/Readme.md)
 
   - [Ceph-mon って何？](./server-nikki/ceph-monってなに？/Readme.md)
+  - [openwrt 同士で wireguard を張ってみる](./server-nikki/openwrt/wireguard/Readme.md)
 
 - [自由記述型](./freewrite/Readme.md)
 
