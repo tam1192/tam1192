@@ -47,3 +47,5 @@
 - [games](./games/Readme.md)
   - [simulator](./games/simulator/Readme.md)
     - [焼肉シミュレーターやってみた](./games/simulator/yknk/Readme.md)
+  - [bluearchive](./games/bluearchive/Readme.md)
+    - [4.5 周年](./games/bluearchive/45/Readme.md)
