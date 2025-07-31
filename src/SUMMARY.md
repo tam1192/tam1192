@@ -42,3 +42,4 @@
   - [mac のパッケージについて](./ひとくちメモ/macのパッケージについて/Readme.md)
   - [(rust の)enum ってどうやって比較すんの](./ひとくちメモ/enumってどうやって比較すんの/Readme.md)
   - [(rust の)from トレイトについて](./ひとくちメモ/rustのfromトレイトについて/Readme.md)
+  - [openwrt で ra を受け取る時に注意すること](./ひとくちメモ/openwrt_ra/Readme.md)
