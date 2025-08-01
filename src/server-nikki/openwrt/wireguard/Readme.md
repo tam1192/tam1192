@@ -11,7 +11,7 @@
 # バージョン情報
 
 投稿日: 2025/07/31
-openwrt: Snapshot
+openwrt: OpenWrt SNAPSHOT, r28931-90dee1ab306o
 実験機器: fortigate 50e
 
 > [!NOTE]
