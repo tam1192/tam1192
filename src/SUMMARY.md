@@ -8,12 +8,6 @@
   - [手を動かしながら git を使う](./coding-nikki/手を動かしながらgitを使う/Readme.md)
   - [Vue × WASM × Rust—試行錯誤とこれからの展望](./coding-nikki/Vue_×_WASM_×_Rust_試行錯誤とこれからの展望/Readme.md)
 
-  - [HTTP であそぼう](./coding-nikki/httpであそぼう/Readme.md)
-
-    - [HTTP であそぼう part1](./coding-nikki/httpであそぼう/1/Readme.md)
-    - [HTTP であそぼう part2](./coding-nikki/httpであそぼう/2/Readme.md)
-    - [HTTP であそぼう part3](./coding-nikki/httpであそぼう/3/Readme.md)
-
   - [Minecraft 系](./coding-nikki/mc/Readme.md)
     - [基礎編 part1](./coding-nikki/mc/1/Readme.md)
     - [基礎編 part2](./coding-nikki/mc/2/Readme.md)
@@ -37,9 +31,18 @@
   - [playground について](./freewrite/playgroundについて/Readme.md)
 
 - [ひとくちメモ](./ひとくちメモ/Readme.md)
+
   - [rust で buffer を作る時は](./ひとくちメモ/rustでbufferを作る時は/Readme.md)
   - [ライフタイムを意識してコードを書く、その 1.rs](./ひとくちメモ/ライフタイムを意識してコードを書く、その1.rs/Readme.md)
   - [mac のパッケージについて](./ひとくちメモ/macのパッケージについて/Readme.md)
   - [(rust の)enum ってどうやって比較すんの](./ひとくちメモ/enumってどうやって比較すんの/Readme.md)
   - [(rust の)from トレイトについて](./ひとくちメモ/rustのfromトレイトについて/Readme.md)
   - [openwrt で ra を受け取る時に注意すること](./ひとくちメモ/openwrt_ra/Readme.md)
+
+- [日記本](./book/Readme.md)
+  - [ネットワークってたぶんこんなもん](./book/networkって多分/Readme.md)
+    - [ネットワークってたぶんこんなもん part1](./book/networkって多分/1/Readme.md)
+  - [HTTP であそぼう](./book/httpであそぼう/Readme.md)
+    - [HTTP であそぼう part1](./book/httpであそぼう/1/Readme.md)
+    - [HTTP であそぼう part2](./book/httpであそぼう/2/Readme.md)
+    - [HTTP であそぼう part3](./book/httpであそぼう/3/Readme.md)
