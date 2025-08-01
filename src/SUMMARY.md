@@ -41,6 +41,7 @@
   - [(rust の)from トレイトについて](./ひとくちメモ/rustのfromトレイトについて/Readme.md)
   - [openwrt で ra を受け取る時に注意すること](./ひとくちメモ/openwrt_ra/Readme.md)
   - [git で誕生日をずらしてもらう方法](./ひとくちメモ/gitで誕生日をずらしてもらう方法/Readme.md)
+  - [openwrt は fw で 9 割だと感じた件](./ひとくちメモ/openwrt_fw/Readme.md)
 
 - [日記本](./book/Readme.md)
 
