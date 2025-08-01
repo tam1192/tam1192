@@ -40,6 +40,8 @@
   - [openwrt で ra を受け取る時に注意すること](./ひとくちメモ/openwrt_ra/Readme.md)
 
 - [日記本](./book/Readme.md)
+  - [ネットワークってたぶんこんなもん](./book/networkって多分/Readme.md)
+    - [ネットワークってたぶんこんなもん part1](./book/networkって多分/1/Readme.md)
   - [HTTP であそぼう](./book/httpであそぼう/Readme.md)
     - [HTTP であそぼう part1](./book/httpであそぼう/1/Readme.md)
     - [HTTP であそぼう part2](./book/httpであそぼう/2/Readme.md)
