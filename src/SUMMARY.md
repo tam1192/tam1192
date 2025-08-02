@@ -8,21 +8,17 @@
   - [手を動かしながら git を使う](./coding-nikki/手を動かしながらgitを使う/Readme.md)
   - [Vue × WASM × Rust—試行錯誤とこれからの展望](./coding-nikki/Vue_×_WASM_×_Rust_試行錯誤とこれからの展望/Readme.md)
 
-  - [HTTP であそぼう](./coding-nikki/httpであそぼう/Readme.md)
-
-    - [HTTP であそぼう part1](./coding-nikki/httpであそぼう/1/Readme.md)
-    - [HTTP であそぼう part2](./coding-nikki/httpであそぼう/2/Readme.md)
-    - [HTTP であそぼう part3](./coding-nikki/httpであそぼう/3/Readme.md)
-
   - [Minecraft 系](./coding-nikki/mc/Readme.md)
     - [基礎編 part1](./coding-nikki/mc/1/Readme.md)
     - [基礎編 part2](./coding-nikki/mc/2/Readme.md)
     - [基礎編 part2+](./coding-nikki/mc/2plus/Readme.md)
     - [paper 編](./coding-nikki/mc/paper/Readme.md)
+      - [paper 編 part1 コマンド補完](./coding-nikki/mc/paper/1/Readme.md)
 
 - [サーバー系](./server-nikki/Readme.md)
 
   - [Ceph-mon って何？](./server-nikki/ceph-monってなに？/Readme.md)
+  - [openwrt 同士で wireguard を張ってみる](./server-nikki/openwrt/wireguard/Readme.md)
 
 - [自由記述型](./freewrite/Readme.md)
 
@@ -43,6 +39,17 @@
   - [mac のパッケージについて](./ひとくちメモ/macのパッケージについて/Readme.md)
   - [(rust の)enum ってどうやって比較すんの](./ひとくちメモ/enumってどうやって比較すんの/Readme.md)
   - [(rust の)from トレイトについて](./ひとくちメモ/rustのfromトレイトについて/Readme.md)
+  - [openwrt で ra を受け取る時に注意すること](./ひとくちメモ/openwrt_ra/Readme.md)
+  - [git で誕生日をずらしてもらう方法](./ひとくちメモ/gitで誕生日をずらしてもらう方法/Readme.md)
+
+- [日記本](./book/Readme.md)
+
+  - [ネットワークってたぶんこんなもん](./book/networkって多分/Readme.md)
+    - [ネットワークってたぶんこんなもん part1](./book/networkって多分/1/Readme.md)
+  - [HTTP であそぼう](./book/httpであそぼう/Readme.md)
+    - [HTTP であそぼう part1](./book/httpであそぼう/1/Readme.md)
+    - [HTTP であそぼう part2](./book/httpであそぼう/2/Readme.md)
+    - [HTTP であそぼう part3](./book/httpであそぼう/3/Readme.md)
 
 - [games](./games/Readme.md)
   - [bluearchive](./games/bluearchive/Readme.md)
