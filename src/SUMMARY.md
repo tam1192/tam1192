@@ -45,3 +45,5 @@
   - [(rust の)from トレイトについて](./ひとくちメモ/rustのfromトレイトについて/Readme.md)
 
 - [games](./games/Readme.md)
+  - [simulator](./games/simulator/Readme.md)
+    - [焼肉シミュレーターやってみた](./games/simulator/yknk/Readme.md)
