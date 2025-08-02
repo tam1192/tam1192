@@ -45,3 +45,4 @@
   - [(rust の)from トレイトについて](./ひとくちメモ/rustのfromトレイトについて/Readme.md)
 
 - [games](./games/Readme.md)
+  - [bluearchive](./games/bluearchive/Readme.md)
