@@ -43,9 +43,14 @@
   - [git で誕生日をずらしてもらう方法](./ひとくちメモ/gitで誕生日をずらしてもらう方法/Readme.md)
 
 - [日記本](./book/Readme.md)
+
   - [ネットワークってたぶんこんなもん](./book/networkって多分/Readme.md)
     - [ネットワークってたぶんこんなもん part1](./book/networkって多分/1/Readme.md)
   - [HTTP であそぼう](./book/httpであそぼう/Readme.md)
     - [HTTP であそぼう part1](./book/httpであそぼう/1/Readme.md)
     - [HTTP であそぼう part2](./book/httpであそぼう/2/Readme.md)
     - [HTTP であそぼう part3](./book/httpであそぼう/3/Readme.md)
+
+- [games](./games/Readme.md)
+  - [bluearchive](./games/bluearchive/Readme.md)
+    - [なぎちゃん強くしたら 400 位になったじゃんね ⭐︎](./games/bluearchive/nagituyo/Readme.md)
