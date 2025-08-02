@@ -40,6 +40,7 @@
   - [(rust の)enum ってどうやって比較すんの](./ひとくちメモ/enumってどうやって比較すんの/Readme.md)
   - [(rust の)from トレイトについて](./ひとくちメモ/rustのfromトレイトについて/Readme.md)
   - [openwrt で ra を受け取る時に注意すること](./ひとくちメモ/openwrt_ra/Readme.md)
+  - [git で誕生日をずらしてもらう方法](./ひとくちメモ/gitで誕生日をずらしてもらう方法/Readme.md)
 
 - [日記本](./book/Readme.md)
   - [ネットワークってたぶんこんなもん](./book/networkって多分/Readme.md)
