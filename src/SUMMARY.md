@@ -37,8 +37,11 @@
   - [playground について](./freewrite/playgroundについて/Readme.md)
 
 - [ひとくちメモ](./ひとくちメモ/Readme.md)
+
   - [rust で buffer を作る時は](./ひとくちメモ/rustでbufferを作る時は/Readme.md)
   - [ライフタイムを意識してコードを書く、その 1.rs](./ひとくちメモ/ライフタイムを意識してコードを書く、その1.rs/Readme.md)
   - [mac のパッケージについて](./ひとくちメモ/macのパッケージについて/Readme.md)
   - [(rust の)enum ってどうやって比較すんの](./ひとくちメモ/enumってどうやって比較すんの/Readme.md)
   - [(rust の)from トレイトについて](./ひとくちメモ/rustのfromトレイトについて/Readme.md)
+
+- [games](./games/Readme.md)
