@@ -46,3 +46,4 @@
 
 - [games](./games/Readme.md)
   - [bluearchive](./games/bluearchive/Readme.md)
+    - [なぎちゃん強くしたら 400 位になったじゃんね ⭐︎](./games/bluearchive/nagituyo/Readme.md)
