@@ -1,4 +1,4 @@
-# paper 編 part1 コマンド定義
+# paper 編 part1 コマンド補完　
 
 基本中の基本でありながら早速引っ掛けがあったのでメモ
 
@@ -178,12 +178,90 @@ commands:
 
 ### 実行結果
 
-`onTabComplete`は、**キー入力を受ける度に呼び出される**ようです！ **tab を押されてから呼び出すわけではない模様**  
-これは深刻な問題です。 もし`onTabComplete`のロジックを複雑にしてしまえば、**キー入力を受ける度にサーバーが重くなる可能性がある**ことを意味します。
+`/コマンド名 コマンド引数1 コマンド引数2...` と入力しますが、  
+実装した Executor を**`getCommand`で登録した時に用いた名前がコマンド名となります。**
 
-> [!NOTE]
-> と、書いたけど実際どーなんでしょうねぇ。
+コマンド名が入力され、引数を入力する際に TabExecutor が呼び出されます。  
+引数の入力が変更される度に`onTabComplete`が呼び出されます。 **Tab が入力された時に呼び出されるわけではない模様**
 
 ## ブロック名で補完させる
 
-`worldedit`のようなプラグインを作りたくなった場合、ブロック名の補完　は必須です。
+`worldedit`のようなプラグインを作りたくなった場合、ブロック名の補完は必須です。  
+最も単純な方補は、**Material**列挙型を使うことです。
+
+> [!NOTE]  
+> `minecraft:oak_log`のような表記を[**名前空間付き id**](https://hub.spigotmc.org/javadocs/spigot/org/bukkit/NamespacedKey.html)などと呼ばれるそうです。  
+> 今回は名前空間を省略いたします。  
+> また、ハーフブロックなどは[**ブロックステータス**](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/block/data/BlockData.html)を持つのですが、  
+> こちらも省略します。
+
+### [Material 列挙隊をみてみよう](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
+
+- ACACIA_BOAT
+- ACACIA_BUTTON
+- ACACIA_CHEST_BOAT
+  ...
+- LEGACY_RECORD_12 Link icon
+
+と、ブロック id が並んでいます。
+
+また、メソッドには`isAir`、`isBlock`など、便利そうなものが実装されています。
+
+### 実際に実装してみる
+
+kotlin では、enum につく`entries`が活用できそうです。  
+これは、一応 getter らしく、`()`は不要とのこと。 中身はイテレーターになってますです！
+
+`isBlock`で block に限定し、文字列に直して mutableList で返却すれば良さそうです。
+
+```kt
+package org.adw39.examplePlugin2.commands
+
+import org.bukkit.Material
+import org.bukkit.command.Command
+import org.bukkit.command.CommandSender
+import org.bukkit.command.TabExecutor
+
+class ExampleCommand : TabExecutor {
+    override fun onTabComplete(
+        p0: CommandSender,
+        p1: Command,
+        p2: String,
+        p3: Array<out String>?
+    ): List<String?>? {
+        println(p3?.getOrNull(0) ?: "")
+        return if (p3?.size == 1) {
+            Material.entries.filter { it.isBlock }.map {it.name.lowercase() }.toMutableList()
+        } else {
+            mutableListOf("")
+        }
+
+    }
+
+    override fun onCommand(
+        p0: CommandSender,
+        p1: Command,
+        p2: String,
+        p3: Array<out String>?
+    ): Boolean {
+        val block = p3?.getOrNull(0) ?: return false
+        p0.sendMessage(block)
+        return true
+    }
+
+}
+```
+
+entries はイテレーターですので、filter や map メソッドが活用できます。
+
+`it.isBlock`はもはや英語として通じてしまいそうで面白いです。  
+`lowercase()`にしてるのは、標準実装されているコマンド`set`などが、lowercase で入力するからです。  
+(あと入力が楽)
+
+### 実行例
+
+![pic1](./pic1.png)
+
+# まとめ
+
+コマンド補完は便利だから実装しよう。

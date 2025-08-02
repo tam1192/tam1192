@@ -13,7 +13,7 @@
     - [基礎編 part2](./coding-nikki/mc/2/Readme.md)
     - [基礎編 part2+](./coding-nikki/mc/2plus/Readme.md)
     - [paper 編](./coding-nikki/mc/paper/Readme.md)
-      - [paper 編 part1 コマンド定義](./coding-nikki/mc/paper/1/Readme.md)
+      - [paper 編 part1 コマンド補完](./coding-nikki/mc/paper/1/Readme.md)
 
 - [サーバー系](./server-nikki/Readme.md)
 
