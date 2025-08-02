@@ -46,3 +46,4 @@
 
 - [games](./games/Readme.md)
   - [bluearchive](./games/bluearchive/Readme.md)
+    - [4.5 周年](./games/bluearchive/45/Readme.md)
