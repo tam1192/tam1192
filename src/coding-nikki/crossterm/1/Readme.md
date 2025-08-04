@@ -8,4 +8,17 @@ tui: gui ではないが、コマンドラインで操作できる ui のこと
 
 ぎゅうたんたん
 
-#
+# とりあえず一句
+
+```rust
+use std::io::{Result, stdout};
+
+use crossterm::{ExecutableCommand, cursor::MoveDown, execute, style::Print};
+
+fn main() -> Result<()> {
+    stdout()
+        .execute(MoveDown(4))?
+        .execute(Print("hello world"))?;
+    Ok(())
+}
+```
