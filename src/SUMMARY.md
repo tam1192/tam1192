@@ -8,6 +8,7 @@
   - [手を動かしながら git を使う](./coding-nikki/手を動かしながらgitを使う/Readme.md)
   - [Vue × WASM × Rust—試行錯誤とこれからの展望](./coding-nikki/Vue_×_WASM_×_Rust_試行錯誤とこれからの展望/Readme.md)
   - [イケてる tui を作ってみる part1](./coding-nikki/crossterm/1/Readme.md)
+  - [イケてる tui を作ってみる part2](./coding-nikki/crossterm/2/Readme.md)
 
   - [Minecraft 系](./coding-nikki/mc/Readme.md)
     - [基礎編 part1](./coding-nikki/mc/1/Readme.md)
