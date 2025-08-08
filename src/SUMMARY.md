@@ -43,6 +43,7 @@
   - [(rust の)from トレイトについて](./ひとくちメモ/rustのfromトレイトについて/Readme.md)
   - [openwrt で ra を受け取る時に注意すること](./ひとくちメモ/openwrt_ra/Readme.md)
   - [git で誕生日をずらしてもらう方法](./ひとくちメモ/gitで誕生日をずらしてもらう方法/Readme.md)
+  - [&mut 型と let mut の違い](./ひとくちメモ/rust_mut_or_andmut/Readme.md)
 
 - [日記本](./book/Readme.md)
 
