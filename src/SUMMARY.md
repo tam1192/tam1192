@@ -33,6 +33,7 @@
   - [携帯電話はもはや電話じゃない](./freewrite/携帯電話はもはや電話じゃない/Readme.md)
   - [スマホ投稿テスト](./freewrite/スマホ投稿テスト/Readme.md)
   - [playground について](./freewrite/playgroundについて/Readme.md)
+  - [コミットしろよ](./freewrite/commit_must/1/Readme.md)
 
 - [ひとくちメモ](./ひとくちメモ/Readme.md)
 
