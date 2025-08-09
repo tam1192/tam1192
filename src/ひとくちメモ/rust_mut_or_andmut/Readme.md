@@ -76,3 +76,54 @@ println!("{}", i); // mの参照がまだ残ってるので、新たに参照が
 
 ~~別の関数を呼び出すことによって、参照を無効化してしまう恐れもある。~~
 コンパイラー曰く「**m の参照が残ってるので新たに参照が作れない**」となるらしい。
+
+## 可変変数の可変参照
+
+```rust, compile_fail
+# fn main() {
+let mut x:i32 = 0;
+let mut y:i32 = 0;
+let mut z:f64 = 0.0;
+let mut edit: &mut i32 = &mut x;
+*edit = 3;
+edit = &mut y;
+*edit = 6;
+edit = &mut z;
+*edit = 9.0;
+println!("x: {}, y: {}, z: {}", x, y, z);
+# }
+```
+
+これが一番ややこしい例です。**可変変数に可変参照を束縛している**という状態です。  
+edit 変数は i32 型の可変参照を持つため、x,y と参照を変えながら、各値を変えています。  
+しかし、**z は f64 型なので、コンパイルエラーとなります。**
+
+```rust
+# fn main() {
+let mut x:i32 = 0;
+let mut y:i32 = 0;
+let mut edit: &mut i32 = &mut x;
+*edit = 3;
+edit = &mut y;
+*edit = 6;
+println!("x: {}, y: {}", x, y);
+# }
+```
+
+z を取り除くと、コンパイルに成功します。  
+なお、こういうのもありということです。
+
+```rust
+# fn main() {
+let mut x:i32 = 0;
+let mut y:i32 = 0;
+let edit: &mut i32 = &mut x;
+*edit = 3;
+let edit: &mut i32 = &mut y;
+*edit = 6;
+println!("x: {}, y: {}", x, y);
+# }
+```
+
+**edit が可変でなくとも参照が可変なので、値の変更が可能です。**  
+とてもややこしい。
