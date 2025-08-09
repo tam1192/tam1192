@@ -79,6 +79,10 @@ linux と darwin は側が似てるだけで**中身全然異なるんだよね*
 これらを統合したアプリケーションは、確認した中で複数存在しました。  
 特に、[**Kegworks**](https://github.com/Kegworks-App/Kegworks)は、さまざまな wine のバージョンを試せるため、おすすめ。  
 [corssover](https://www.codeweavers.com) という選択肢もあるけれど、普通に高い。
+![pic1](./pic1.png)
+
+> [!TIP]  
+> [DXMT](https://github.com/3Shain/dxmt)は D3DMetal と異なり、オープンソースで似たようなことを行うプロジェクト
 
 ## Retina に対応させる。
 
@@ -94,8 +98,16 @@ wine 付属の regedit で
 データ:  
 `Y`
 
+![pic2](./pic2.png)
+
 これで wine を再起動すると、Retina 対応になります。(解像度が mac のディスプレイと同じになる)  
 **wine 設定(winecfg)の画面設定から DPI を上げておくことを推奨します。**
+
+![pic3](./pic3.png)
+
+> [!TIP]  
+> 日本語化する際のフォントですが、fakejapanese 系のやつが結構豆腐を消してくれるイメージがあります。  
+> ![pic4](./pic4.png)
 
 # 参考
 
