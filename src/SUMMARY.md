@@ -58,6 +58,8 @@
     - [HTTP であそぼう part3.5](./book/httpであそぼう/3_5/Readme.md)
 
 - [games](./games/Readme.md)
+  - [simulator](./games/simulator/Readme.md)
+    - [焼肉シミュレーターやってみた](./games/simulator/yknk/Readme.md)
   - [bluearchive](./games/bluearchive/Readme.md)
     - [なぎちゃん強くしたら 400 位になったじゃんね ⭐︎](./games/bluearchive/nagituyo/Readme.md)
   - [subnautica やってみた](./games/subnautica/Readme.md)
