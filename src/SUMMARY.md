@@ -47,6 +47,7 @@
   - [&mut 型と let mut の違い](./ひとくちメモ/rust_mut_or_andmut/Readme.md)
   - [mac の wine と、retina や d3d11 とかの話](./ひとくちメモ/mac_wine/Readme.md)
   - [Tailscale を使ってみた](./ひとくちメモ/tailscale/Readme.md)
+  - [github で組織を形成する](./ひとくちメモ/githubOrganizations/Readme.md)
 
 - [日記本](./book/Readme.md)
 
