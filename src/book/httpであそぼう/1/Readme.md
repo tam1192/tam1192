@@ -8,7 +8,8 @@
 自分がこの記事を書いた時代がわかるように、これから本日の一曲という項目を書いていきます。唐突に追加しました。
 今最も聞いてる曲で選曲してます。
 
-[ガラスハナビ / ねじ式 feat.小春六花](https://www.nicovideo.jp/watch/sm42571626)  
+<iframe width="312" height="176" src="https://ext.nicovideo.jp/thumb/sm42571626" scrolling="no" style="border:solid 1px #ccc;" frameborder="0"><a href="https://www.nicovideo.jp/watch/sm42571626">ガラスハナビ / ねじ式 feat.小春六花</a></iframe>
+
 PV の立花ちゃんがかわいいね。
 
 ## ★ について (★★★)

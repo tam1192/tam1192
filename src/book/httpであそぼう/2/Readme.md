@@ -5,7 +5,8 @@
 
 ## 本日の 1 曲 🎶
 
-[レンズフレア - feat.音楽的同位体(V.I.P)](https://www.nicovideo.jp/watch/sm43424657)  
+<iframe width="312" height="176" src="https://ext.nicovideo.jp/thumb/sm43424657" scrolling="no" style="border:solid 1px #ccc;" frameborder="0"><a href="https://www.nicovideo.jp/watch/sm43424657">レンズフレア - feat.音楽的同位体(V.I.P)</a></iframe>
+
 同位体 5 人の合唱曲。 かっこよすぎる。
 
 ## ★ について (★★★)
