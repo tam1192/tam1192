@@ -15,3 +15,7 @@ Organizations 一覧が表示されます。
 
 > [!NOTE]  
 > Addon にある github copilot はオプションです。 有能だけど高いから注意。
+
+# できること
+
+複数人で git を使って作業する時はほしいやつ。
