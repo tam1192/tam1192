@@ -150,6 +150,91 @@ Debug と異なり、Display はフォーマットを自分で作りたいので
 Display は`to_string()`も間接的に実装してくれます ToString トレイトもありますが、Display を使っておけば両方に対応するのです。  
 `write!`マクロは println と使い心地が似てますが、先頭に Formatter を指定する必要があります。
 
+# ユーザーに自由な値を提供する
+
+`usize`以外にも、`u8`でメモリを節約する、`i32`でプラマイに対応する、`f64`で小数点に対応させる、`&str`で文字列を扱うようにするなど、さまざまなユースケースが考えられます。
+
+```mermaid
+classDiagram
+direction TB
+    class Point["Point < T >"] {
+	    -T x
+	    -T y
+    }
+
+    class Debug {
+	    - std::fmt::Result fmt()
+    }
+
+	<<Trait>> Debug
+
+    class Display {
+	    - std::fmt::Result fmt()
+    }
+
+	<<Trait>> Display
+
+    Point --|> Debug
+    Point --|> Display
+```
+
+```rust
+use std::fmt;
+
+#[derive(Debug)]
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> fmt::Display for Point<T> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}, {}", self.x, self.y)
+    }
+}
+
+fn main() {
+    let p = Point { x: 3, y: 6 };
+    println!("{}", p);
+    assert_eq!(p.to_string(), String::from("3, 6"));
+}
+```
+
+残念ながらこれでは、コンパイルエラーになります。  
+問題点は「Display」です。 **T が Display(もしくは ToString)を実装しているという確証がないのです。**
+
+## T が特定のトレイトを実装している時のみ、メソッドの利用を許容する
+
+rust のトレイトは、面白い機能があります。 **メンバー変数が実装しているトレイトによって、使用できるメソッドを変化させられるのです!**
+
+```rust
+use std::fmt;
+
+#[derive(Debug)]
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> fmt::Display for Point<T>
+where
+    T: fmt::Display,
+{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}, {}", self.x, self.y)
+    }
+}
+
+fn main() {
+    let p = Point { x: 3, y: 6 };
+    println!("{}", p);
+    assert_eq!(p.to_string(), String::from("3, 6"));
+}
+```
+
+構造体`Point`は、型に制限なく作ることができます。 **Display トレイトを実装してなくても、実装できます。**  
+一方で、Point を Display に対応させるためには、**型 T に Display トレイトを実装している必要があります。**
+
 # まとめ
 
 オリ曲の存在を証明するには、私の頭を解剖するしかない。
