@@ -235,6 +235,80 @@ fn main() {
 構造体`Point`は、型に制限なく作ることができます。 **Display トレイトを実装してなくても、実装できます。**  
 一方で、Point を Display に対応させるためには、**型 T に Display トレイトを実装している必要があります。**
 
+## 足し算引き算できるようにする。
+
+数学的なのはおいといて、x と y それぞれ足し引きできるようにします。 `Add`トレイト、および`Sub`トレイトです。
+
+```rust
+use std::{
+    fmt,
+    ops::{Add, Sub},
+};
+
+#[derive(Debug)]
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> fmt::Display for Point<T>
+where
+    T: fmt::Display,
+{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}, {}", self.x, self.y)
+    }
+}
+
+impl<T> Add for Point<T>
+where
+    T: Add<Output = T>,
+{
+    type Output = Point<T>;
+    fn add(self, rhs: Self) -> Self::Output {
+        let x = self.x + rhs.x;
+        let y = self.y + rhs.y;
+        Self { x, y }
+    }
+}
+
+impl<T> Sub for Point<T>
+where
+    T: Sub<Output = T>,
+{
+    type Output = Point<T>;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        let x = self.x - rhs.x;
+        let y = self.y - rhs.y;
+        Self { x, y }
+    }
+}
+
+fn main() {
+    let p = Point { x: 3, y: 6 };
+    println!("{}", p);
+    assert_eq!(p.to_string(), String::from("3, 6"));
+}
+```
+
+type は型に**別名を与える**という役割を持ってます。型に名前をつけると、コメント以上に可読性が上がります。
+
+```rust, ignore
+/// 戻り値は、kg単位で返却されます
+fn latest_weight(id: usize) -> i32;
+/// 戻り値は、cm単位で返却されます
+fn latest_length(id: usize) -> i32;
+```
+
+```rust, ignore
+type Kg = i32;
+type Cm = i32;
+
+fn latest_weight(id: usize) -> Kg;
+fn latest_length(id: usize) -> Cm;
+```
+
 # まとめ
 
 オリ曲の存在を証明するには、私の頭を解剖するしかない。
