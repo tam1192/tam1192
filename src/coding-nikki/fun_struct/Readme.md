@@ -250,15 +250,15 @@ struct Point<T> {
     x: T,
     y: T,
 }
-
-impl<T> fmt::Display for Point<T>
-where
-    T: fmt::Display,
-{
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}, {}", self.x, self.y)
-    }
-}
+#
+# impl<T> fmt::Display for Point<T>
+# where
+#     T: fmt::Display,
+# {
+#     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+#         write!(f, "{}, {}", self.x, self.y)
+#     }
+# }
 
 impl<T> Add for Point<T>
 where
@@ -292,7 +292,8 @@ fn main() {
 }
 ```
 
-type は型に**別名を与える**という役割を持ってます。型に名前をつけると、コメント以上に可読性が上がります。
+type は型に**別名を与える**という役割を持ってます。型に名前をつけると、コメント以上に可読性が上がります。  
+**オリジナルな型のように見えます**。 構造体、enum の仲間みたいな。見えるだけでなく、可視性もそんな感じになったはず。
 
 ```rust, ignore
 /// 戻り値は、kg単位で返却されます
@@ -308,6 +309,21 @@ type Cm = i32;
 fn latest_weight(id: usize) -> Kg;
 fn latest_length(id: usize) -> Cm;
 ```
+
+もう一つは、トレイト定義の自由度を高める使い方があります。  
+`Add`、`Sub`などの計算系トレイトの戻り値は、Output(出力)の方を**自由に調整できます。**
+
+```rust, ignore
+impl<T> Sub for Point<T>
+where
+    T: Sub<Output = T>,
+{
+    type Output = Point<T>;
+#}
+```
+
+型 T 自体にも、**T を Output とする Sub トレイトを実装**している必要があり、  
+自信も`Point<T>`を Output とする Sub トレイトを実装しています。
 
 # まとめ
 
