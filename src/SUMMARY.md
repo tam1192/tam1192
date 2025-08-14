@@ -17,7 +17,7 @@
     - [paper 編](./coding-nikki/mc/paper/Readme.md)
       - [paper 編 part1 コマンド補完](./coding-nikki/mc/paper/1/Readme.md)
     - [fabric 編](./coding-nikki/mc/fabric/Readme.md)
-      - [fabric 編 part1 ブロック作ってみた](./coding-nikki/mc/fabric/1/Readme.md)
+      - [fabric 編 part1 仕様が大きく変わっちまったぜ](./coding-nikki/mc/fabric/1/Readme.md)
   - [構造体で遊ぶ](./coding-nikki/fun_struct/Readme.md)
 
 - [サーバー系](./server-nikki/Readme.md)
