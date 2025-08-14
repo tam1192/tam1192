@@ -241,24 +241,24 @@ fn main() {
 
 ```rust
 use std::{
-    fmt,
+    fmt::{self, Pointer},
     ops::{Add, Sub},
 };
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 struct Point<T> {
     x: T,
     y: T,
 }
-#
-# impl<T> fmt::Display for Point<T>
-# where
-#     T: fmt::Display,
-# {
-#     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-#         write!(f, "{}, {}", self.x, self.y)
-#     }
-# }
+
+impl<T> fmt::Display for Point<T>
+where
+    T: fmt::Display,
+{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}, {}", self.x, self.y)
+    }
+}
 
 impl<T> Add for Point<T>
 where
@@ -268,7 +268,7 @@ where
     fn add(self, rhs: Self) -> Self::Output {
         let x = self.x + rhs.x;
         let y = self.y + rhs.y;
-        Self { x, y }
+        Point { x, y }
     }
 }
 
@@ -281,7 +281,7 @@ where
     fn sub(self, rhs: Self) -> Self::Output {
         let x = self.x - rhs.x;
         let y = self.y - rhs.y;
-        Self { x, y }
+        Point { x, y }
     }
 }
 
@@ -289,6 +289,7 @@ fn main() {
     let p = Point { x: 3, y: 6 };
     println!("{}", p);
     assert_eq!(p.to_string(), String::from("3, 6"));
+    assert_eq!(p + p, Point { x: 6, y: 12 })
 }
 ```
 
@@ -316,14 +317,181 @@ fn latest_length(id: usize) -> Cm;
 ```rust, ignore
 impl<T> Sub for Point<T>
 where
-    T: Sub<Output = T>,
+    T: Sub<Output = T> + Copy,
 {
     type Output = Point<T>;
 #}
 ```
 
 型 T 自体にも、**T を Output とする Sub トレイトを実装**している必要があり、  
-自信も`Point<T>`を Output とする Sub トレイトを実装しています。
+自身も`Point<T>`を Output とする Sub トレイトを実装しています。
+
+> [!NOTE]  
+> **ついでに、Clone, Copy, PartialEq を実装しております**
+>
+> - Clone  
+>   構造体の複製を行う clone メソッドを追加する
+> - Copy  
+>    デフォルトが move なのを、clone に置き換える
+>
+> Copy まで実装しておくと楽です。
+> 参照ではない時の値が move から copy に変わるため、**所有権が奪われる心配が減ります。**  
+> 一方で、**インスタンスが増えてメモリを圧迫する、同じインスタンスだと思ったら別物だった**なんてトラブルもつきます。
+> 数値`i32`などでは、Copy が実装されています。
+>
+> - PartialEq  
+>   値の比較ができるようになる。
+
+## 参照で計算できるように工夫する
+
+計算する度にコピーよりか、参照の方がいいと思った。でも中身で結局コピーしちゃうんだよね。
+
+```rust
+use std::{
+    fmt::{self},
+    ops::{Add, Sub},
+};
+
+#[derive(Debug, PartialEq, Clone)]
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> fmt::Display for Point<T>
+where
+    T: fmt::Display,
+{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}, {}", self.x, self.y)
+    }
+}
+
+impl<T> Add for &Point<T>
+where
+    T: Add<Output = T> + Clone,
+{
+    type Output = Point<T>;
+    fn add(self, rhs: Self) -> Self::Output {
+        let x = self.x.clone() + rhs.x.clone();
+        let y = self.y.clone() + rhs.y.clone();
+        Point { x, y }
+    }
+}
+
+impl<T> Sub for &Point<T>
+where
+    T: Sub<Output = T> + Clone,
+{
+    type Output = Point<T>;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        let x = self.x.clone() - rhs.x.clone();
+        let y = self.y.clone() - rhs.y.clone();
+        Point { x, y }
+    }
+}
+
+fn main() {
+    let p = Point { x: 3, y: 6 };
+    println!("{}", p);
+    assert_eq!(p.to_string(), String::from("3, 6"));
+    assert_eq!(&p + &p, Point { x: 6, y: 12 })
+}
+```
+
+Copy の方が楽ですね。
+
+# 変換に対応させる
+
+タプルから変換できると楽そうですよね。
+
+```rust
+use std::{
+    fmt::{self},
+    ops::{Add, Sub},
+};
+
+#[derive(Debug, PartialEq, Clone, Copy)]
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+# impl<T> fmt::Display for Point<T>
+# where
+#     T: fmt::Display,
+# {
+#     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+#         write!(f, "{}, {}", self.x, self.y)
+#     }
+# }
+#
+# impl<T> Add for Point<T>
+# where
+#     T: Add<Output = T>,
+# {
+#     type Output = Point<T>;
+#     fn add(self, rhs: Self) -> Self::Output {
+#         let x = self.x + rhs.x;
+#         let y = self.y + rhs.y;
+#         Point { x, y }
+#     }
+# }
+#
+# impl<T> Sub for Point<T>
+# where
+#     T: Sub<Output = T>,
+# {
+#     type Output = Point<T>;
+#
+#     fn sub(self, rhs: Self) -> Self::Output {
+#         let x = self.x - rhs.x;
+#         let y = self.y - rhs.y;
+#         Point { x, y }
+#     }
+# }
+
+impl<T> From<(T, T)> for Point<T> {
+    fn from(value: (T, T)) -> Self {
+        Point {
+            x: value.0,
+            y: value.1,
+        }
+    }
+}
+
+impl<T> From<Point<T>> for (T, T) {
+    fn from(value: Point<T>) -> Self {
+        (value.x, value.y)
+    }
+}
+
+fn main() {
+    let x: (i32, i32) = (2, 3);
+    let x: Point<i32> = Point::from(x);
+    let (x, y): (i32, i32) = x.into();
+}
+```
+
+**From**トレイトを実装すると、変換が可能になります。
+今回は**タプルから Point へ、Point からタプルへ変換できるようにしました。**
+
+main 関数では、相互変換を実装しています。  
+2 行目は From の使い方です。 from はいわゆる静的メソッドであり、new メソッドのように**新たなインスタンスを作ることを目的としています。**  
+つまり、変換先のインスタンスは別物です。 そりゃそう。
+
+一方で、3 行目は into メソッドによってタプルに変換されています。インスタンスについているメソッドですね。  
+From トレイトを実装すると、自動的に実装されます。
+
+> [!NOTE]  
+> Into は From の逆だと聞いて、相互変換と考えてしまった時期がありました。  
+> 実際には、静的メソッドかただのメソットか、その差です。
+>
+> **相互変換に対応させるために、お互いに From トレイトを適用しています。**  
+> これによって相互変換ができるようになるのです。
+>
+> **into 使う時は、型注釈が必要です。**
 
 # まとめ
 
