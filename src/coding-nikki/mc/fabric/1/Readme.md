@@ -1,6 +1,7 @@
-# fabric 編 part1 ブロック作ってみた
+# fabric 編 part1 仕様が大きく変わっちまったぜ
 
 生まれて 23 年、まさかのブロックすら作ったことないってマ？
+作ろうとしたらトラブったので。
 
 # 🎥 今日の RT
 
@@ -96,3 +97,6 @@ class Myfabricmods : ModInitializer {
 ```
 
 とりあえず 1 つのファイルに無理やり納めてみるとこうなった。
+
+> [!NOTE]  
+> まとめると、Item の settings に registryKey が必要になった？ ということらしい。
