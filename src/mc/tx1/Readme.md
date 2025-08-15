@@ -209,3 +209,6 @@ Some intrusive holders were not registered: [Reference{null=[unregistered]}]
 ```
 
 block 作成時のエラー(fabric)
+
+メモ
+Registered 時、BlockItem で登録しないと失敗する
