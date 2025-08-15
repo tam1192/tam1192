@@ -20,6 +20,7 @@
     - [paper 編 part1 コマンド補完](./mc/paper/1/Readme.md)
   - [fabric 編](./mc/fabric/Readme.md)
     - [fabric 編 part1 仕様が大きく変わっちまったぜ](./mc/fabric/1/Readme.md)
+  - [テクスチャ編 part1](./mc/tx1/Readme.md)
 
 - [サーバー系](./server-nikki/Readme.md)
 
