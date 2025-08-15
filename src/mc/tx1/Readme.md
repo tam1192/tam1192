@@ -176,7 +176,7 @@
 
 </details>
 
-`assets/minecraft/models/stone.json`
+`assets/minecraft/models/block/stone.json`
 
 ```json
 {
@@ -187,7 +187,7 @@
 }
 ```
 
-`assets/minecraft/models/cube_all.json`
+`assets/minecraft/models/block/cube_all.json`
 
 ```json
 {
@@ -203,3 +203,9 @@
   }
 }
 ```
+
+```
+Some intrusive holders were not registered: [Reference{null=[unregistered]}]
+```
+
+block 作成時のエラー(fabric)
