@@ -100,3 +100,30 @@ class Myfabricmods : ModInitializer {
 
 > [!NOTE]  
 > まとめると、Item の settings に registryKey が必要になった？ ということらしい。
+
+> [!NOTE]  
+> ここまでやってできることは、**コマンドでアイテムを呼び出すこと**  
+> ![pic1](pic1.png)
+
+# クリエイティブインベントリに追加する
+
+今回は適当に「Redstone」タブに追加することに
+
+```kt
+ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
+    it.add { item }
+}
+```
+
+一瞬で追加できました。
+
+> [!NOTE]  
+> ItemGroup**s** みたいに、複数形のやつは enum(列挙型)なのかな？
+
+> [!NOTE]  
+> ここまでやってできることは、**クリエイティブインベントリでアイテムを呼び出すこと**  
+> ![pic2](pic2.png)
+
+# 次回
+
+テクスチャをつけたい。
