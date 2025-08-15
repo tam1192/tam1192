@@ -123,3 +123,7 @@ ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
 > [!NOTE]  
 > ここまでやってできることは、**クリエイティブインベントリでアイテムを呼び出すこと**  
 > ![pic2](pic2.png)
+
+# 次回
+
+テクスチャをつけたい。
