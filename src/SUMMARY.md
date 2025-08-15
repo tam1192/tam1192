@@ -67,4 +67,5 @@
     - [焼肉シミュレーターやってみた](./games/simulator/yknk/Readme.md)
   - [bluearchive](./games/bluearchive/Readme.md)
     - [なぎちゃん強くしたら 400 位になったじゃんね ⭐︎](./games/bluearchive/nagituyo/Readme.md)
+    - [チャレンジミッション全クリを目指して](./games/bluearchive/hard/Readme.md)
   - [subnautica やってみた](./games/subnautica/Readme.md)
