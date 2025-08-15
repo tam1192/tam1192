@@ -8,6 +8,8 @@
 
 1.21.3 の場合(tree コマンドの結果)
 
+`assets/minecraft/`以降で表示
+
 ```
 .
 ├── atlases
@@ -173,3 +175,31 @@
 ```
 
 </details>
+
+`assets/minecraft/models/stone.json`
+
+```json
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "minecraft:block/stone"
+  }
+}
+```
+
+`assets/minecraft/models/cube_all.json`
+
+```json
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "#all",
+    "down": "#all",
+    "up": "#all",
+    "north": "#all",
+    "east": "#all",
+    "south": "#all",
+    "west": "#all"
+  }
+}
+```
