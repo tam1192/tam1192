@@ -260,6 +260,121 @@ object MyBlocks {
 <span style="color: blue;">I: クリエイティブインベントリにも追加済みです。</span>  
 <span style="color: red;">E: テクスチャついてないけど、起動確認するで</span>
 
-# 注釈
+![pic1](./pic1.png)
+
+<span style="color: red;">E: お、**普通に起動した**で</span>  
+<span style="color: blue;">I: あっさり起動したね。 でも、一回間違えて **`BlockItem`を`Item`で初期化してたの覚えてるよ** </span>  
+<span style="color: red;">E: 余計なこと言わんくてええで</span>
+
+# テクスチャを張ってみる
+
+<span style="color: blue;">I: 私テクスチャ作ったことあるよ </span>  
+<span style="color: red;">E: そか。 なら簡単に追加できそうやね </span>  
+<span style="color: blue;">I: そなの？ **バニラなら指定された部分の画像ファイルを変えたり、json ファイルを少しいじるだけだったよ** </span>
+
+> [!NOTE]  
+> バニラのテクスチャの変え方は後日別記事にて投稿します。
+
+(実際に張ってみた)
+![pic1](./pic1.png)
+
+<span style="color: blue;">I: なんで画像使いまわしてるの </span>  
+<span style="color: red;">E: ~~通信費圧縮のためやで。~~ いや、実際一ミリも変わってないで </span>  
+<span style="color: blue;">I: 嘘でしょ </span>  
+<span style="color: blue;">I: ...あれ、これ。 modID が item になってない？ </span>
+
+![pic2](./pic2.png)
+
+<span style="color: red;">E: ほんまや、**コーディングミスったかな** </span>  
+<span style="color: blue;">I: テクスチャの場所間違えたかな...? </span>
+
+(調べてみる)
+
+> **テクスチャを置く場所**  
+> `src/main/resources/assets/<MOD_ID>`より中です
+
+> **画像ファイルは**  
+> 正方形で、`src/main/resources/assets/<MOD_ID>/texture`の中です。 `block`、`item`とサブディレクトリが続きます。
+
+> **言語ファイル設定しましたか？**  
+> 正方形で、`src/main/resources/assets/<MOD_ID>/lang`の中です。 英語は`en_us.json`、日本語は`ja_jp.json`です。
+
+> **1.21.x 以降の Registry について**  
+> `AbstractBlock.Settings` や、`Item.Settings` の中に`RegistryKey`を埋め込む必要があります。
+
+...
+
+(数時間後)
+
+<span style="color: red;">E: ぜんっぜんわからへん！ </span>  
+<span style="color: blue;">I: いっそ**java で描き直そうよ...** </span>  
+<span style="color: red;">E: いやや！うちは kotlin って決めたんや！ </span>
+
+> **blockstates 登録しましたか？**  
+> ここに json ファイルおかないと表示されへんよ
+
+<span style="color: red;">E: BlockState ってあれやろ？ **ブロックの状態を示すやつ** </span>  
+<span style="color: blue;">I: すごい、まるでそのままだ。 </span>  
+<span style="color: red;">E: そう思って無視してたけど </span>  
+<span style="color: blue;">I: **json ファイルを設置しないと表示されないみたいだね。** </span>
+
+<span style="color: red;">E: ... </span>  
+<span style="color: blue;">I: ... </span>
+
+`src/main/resources/assets/my_fabric_mods/lang/ja_jp.json`
+
+```json
+{
+  "item.my_fabric_mods.tatami": "畳"
+}
+```
+
+> [!TIP]  
+> [docs だと](https://docs.fabricmc.net/develop/blocks/first-block) block だったけど、item にしたら適用されたよ
+
+`src/main/resources/assets/my_fabric_mods/blockstates/tatami.json`
+
+```json
+{
+  "variants": {
+    "": {
+      "model": "my_fabric_mods:block/tatami"
+    }
+  }
+}
+```
+
+> [!TIP]  
+> モデルとテクスチャはバニラとあまり変化なかったので省略します
+
+![pic3](./pic3.png)
+
+<span style="color: blue;">I: あの </span><span style="color: red;">E: はい </span>  
+<span style="color: blue;">I: **表示されてるんですが** </span>  
+<span style="color: red;">E: すまんな </span>  
+<span style="color: blue;">I: **すまんなじゃないでしょ！** やったね！ </span>  
+<span style="color: red;">E: 今日は寝れそうやな </span>
+
+# まとめ
+
+<span style="color: red;">E: **ドキュメントは、ちゃんと最後まできっちり読みましょうっちゅうことや** </span>  
+<span style="color: blue;">I: そうだね。 </span>  
+<span style="color: blue;">I: 途中からタイポも多かったね </span>  
+<span style="color: red;">E: めんどくなってコピペに頼ってたで </span>  
+<span style="color: blue;">I: 頻繁にコミットしてたから、**やり直しが簡単だった**のは良かったね。 </span>  
+<span style="color: red;">E: せやなぁー </span>
+<span style="color: red;">E: I ちゃんも、ネームスペースを`minecraft:`って書いててミスしまくってたで </span>  
+<span style="color: blue;">I: バニラのモデルも使わないと行けなかったから、ちょっと混合してた。 </span>
+
+<span style="color: red;">E: ほな、次回は**クラフトできるようにしたいで** </span>  
+<span style="color: blue;">I: そうだね。サバイバルモードでも使えるようにしたいよね。 </span>
+
+# 注釈とか
 
 [^c1]: 日記さんの考えです。言わせてすみません。
+
+# 日記さんまとめ
+
+どうしてもやりたかった。(読みづらい記事になったことを)反省してる。
+
+動画化？そのうちね。(口癖)
