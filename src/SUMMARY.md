@@ -9,16 +9,17 @@
   - [Vue × WASM × Rust—試行錯誤とこれからの展望](./coding-nikki/Vue_×_WASM_×_Rust_試行錯誤とこれからの展望/Readme.md)
   - [イケてる tui を作ってみる part1](./coding-nikki/crossterm/1/Readme.md)
   - [イケてる tui を作ってみる part2](./coding-nikki/crossterm/2/Readme.md)
-
-  - [Minecraft 系](./coding-nikki/mc/Readme.md)
-    - [基礎編 part1](./coding-nikki/mc/1/Readme.md)
-    - [基礎編 part2](./coding-nikki/mc/2/Readme.md)
-    - [基礎編 part2+](./coding-nikki/mc/2plus/Readme.md)
-    - [paper 編](./coding-nikki/mc/paper/Readme.md)
-      - [paper 編 part1 コマンド補完](./coding-nikki/mc/paper/1/Readme.md)
-    - [fabric 編](./coding-nikki/mc/fabric/Readme.md)
-      - [fabric 編 part1 仕様が大きく変わっちまったぜ](./coding-nikki/mc/fabric/1/Readme.md)
   - [構造体で遊ぶ](./coding-nikki/fun_struct/Readme.md)
+
+- [Minecraft 系](./mc/Readme.md)
+
+  - [基礎編 part1](./mc/1/Readme.md)
+  - [基礎編 part2](./mc/2/Readme.md)
+  - [基礎編 part2+](./mc/2plus/Readme.md)
+  - [paper 編](./mc/paper/Readme.md)
+    - [paper 編 part1 コマンド補完](./mc/paper/1/Readme.md)
+  - [fabric 編](./mc/fabric/Readme.md)
+    - [fabric 編 part1 仕様が大きく変わっちまったぜ](./mc/fabric/1/Readme.md)
 
 - [サーバー系](./server-nikki/Readme.md)
 
