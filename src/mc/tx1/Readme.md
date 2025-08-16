@@ -212,3 +212,5 @@ block 作成時のエラー(fabric)
 
 メモ
 Registered 時、BlockItem で登録しないと失敗する
+
+https://maven.fabricmc.net/docs/yarn-1.20.1+build.10/net/minecraft/package-summary.html
