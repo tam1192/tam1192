@@ -37,6 +37,7 @@
   - [スマホ投稿テスト](./freewrite/スマホ投稿テスト/Readme.md)
   - [playground について](./freewrite/playgroundについて/Readme.md)
   - [コミットしろよ](./freewrite/commit_must/1/Readme.md)
+  - [快活で作業してみた](./freewrite/kaikatu/Readme.md)
 
 - [ひとくちメモ](./ひとくちメモ/Readme.md)
 
