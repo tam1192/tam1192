@@ -39,6 +39,7 @@
   - [playground について](./freewrite/playgroundについて/Readme.md)
   - [コミットしろよ](./freewrite/commit_must/1/Readme.md)
   - [快活で作業してみた](./freewrite/kaikatu/Readme.md)
+  - ["tam1192"repo のルール変えました](./freewrite/tam1192_repo_2508/Readme.md)
 
 - [ひとくちメモ](./ひとくちメモ/Readme.md)
 
