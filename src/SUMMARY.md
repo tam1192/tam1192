@@ -10,6 +10,7 @@
   - [イケてる tui を作ってみる part1](./coding-nikki/crossterm/1/Readme.md)
   - [イケてる tui を作ってみる part2](./coding-nikki/crossterm/2/Readme.md)
   - [構造体で遊ぶ](./coding-nikki/fun_struct/Readme.md)
+  - [トレイトで遊ぶ](./coding-nikki/fun_trait/Readme.md)
 
 - [Minecraft 系](./mc/Readme.md)
 
