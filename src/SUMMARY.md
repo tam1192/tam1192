@@ -66,6 +66,7 @@
     - [HTTP であそぼう part2](./book/httpであそぼう/2/Readme.md)
     - [HTTP であそぼう part3](./book/httpであそぼう/3/Readme.md)
     - [HTTP であそぼう part3.5](./book/httpであそぼう/3_5/Readme.md)
+    - [HTTP であそぼう part4](./book/httpであそぼう/4/Readme.md)
 
 - [games](./games/Readme.md)
   - [simulator](./games/simulator/Readme.md)
