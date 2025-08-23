@@ -47,3 +47,75 @@ OS は一度、全ての通信をバッファに蓄えます。 そこから、�
 > [!NOTE]  
 > Accept して read しないで待機しつつ、大量に通信送ってみたら、（つまり OS のバッファを埋めるように待っていたら）  
 > いろんな通信ができなくなった経験がある。経験則。
+
+# 受信してみる
+
+実は 3 章とかで少し触れてます。 今回は実際の TcpListener を使うだけです。
+
+```rust, ignore
+# use anyhow::{Result, anyhow};
+# use std::{
+#     collections::HashMap,
+#     io::{Read, Write},
+#     net::TcpListener,
+# };
+#
+# pub mod http_util;
+#
+fn main() -> Result<()> {
+    let listener = TcpListener::bind("0.0.0.0:4000")?;
+    {
+        let (mut stream, _) = listener.accept()?;
+        let mut buf = [0u8; 512];
+
+        stream.read(&mut buf)?;
+
+        let buf = String::from_utf8_lossy(&buf);
+        println!("{}", buf);
+    }
+    Ok(())
+}
+```
+
+バッファを作り、そこに移動してもらうようにします。 mut 付き参照渡しをします。  
+戻り値は実際に読み込めたサイズとなります。 なお最大値(バッファを 512 で作ってるなら 512)で返ってきた場合、**まだデータが残ってる恐れがあることを検討しましょう。**
+
+とりまこの形になるとこまで。
+
+## HTTP にパースしてみる
+
+HTTP パーサーでパースしてみます。
+
+```rust, ignore
+# use anyhow::{Result, anyhow};
+# use std::{
+#     collections::HashMap,
+#     io::{Read, Write},
+#     net::TcpListener,
+# };
+#
+# pub mod http_util;
+#
+fn main() -> Result<()> {
+    let listener = TcpListener::bind("0.0.0.0:4000")?;
+    {
+        let (mut stream, _) = listener.accept()?;
+        let mut buf = [0u8; 512];
+
+        stream.read(&mut buf)?;
+
+        let buf = String::from_utf8_lossy(&buf);
+
+        let req = http_util::HttpRequest::from_str(&buf).ok_or(anyhow!("parse error"))?;
+        println!("{} {}", req.method, req.path);
+    }
+    Ok(())
+}
+```
+
+エラー処理は anyhow に任せてます。~~めんどいし。~~  
+HttpRequest の各要素は **public**です。そのまま取り出すことができます。
+
+> [!NOTE]  
+> rust は基本不変ですので、この設計でいいと思いますがいかがでしょうか。  
+> 使用者が HttpRequest を mut で作って変更してたら、そういう事情があると考えていいと私は思います。
