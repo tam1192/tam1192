@@ -98,17 +98,15 @@ HTTP パーサーでパースしてみます。
 #
 fn main() -> Result<()> {
     let listener = TcpListener::bind("0.0.0.0:4000")?;
-    {
-        let (mut stream, _) = listener.accept()?;
-        let mut buf = [0u8; 512];
+    let (mut stream, _) = listener.accept()?;
+    let mut buf = [0u8; 512];
 
-        stream.read(&mut buf)?;
+    stream.read(&mut buf)?;
 
-        let buf = String::from_utf8_lossy(&buf);
+    let buf = String::from_utf8_lossy(&buf);
 
-        let req = http_util::HttpRequest::from_str(&buf).ok_or(anyhow!("parse error"))?;
-        println!("{} {}", req.method, req.path);
-    }
+    let req = http_util::HttpRequest::from_str(&buf).ok_or(anyhow!("parse error"))?;
+    println!("{} {}", req.method, req.path);
     Ok(())
 }
 ```
@@ -119,3 +117,62 @@ HttpRequest の各要素は **public**です。そのまま取り出すことが
 > [!NOTE]  
 > rust は基本不変ですので、この設計でいいと思いますがいかがでしょうか。  
 > 使用者が HttpRequest を mut で作って変更してたら、そういう事情があると考えていいと私は思います。
+
+> [!TIP]  
+> `curl http://localhost:4000`の実行結果
+>
+> (サーバー側)
+>
+> ```
+> GET /
+> ```
+>
+> (クライアント側)
+>
+> ```
+> curl: (52) Empty reply from server
+> ```
+
+## 返信をする
+
+もらったリクエストにはレスポンスで返すようにします。
+
+```rust, ignore
+# use anyhow::{Result, anyhow};
+# use std::{
+#     collections::HashMap,
+#     io::{Read, Write},
+#     net::TcpListener,
+# };
+#
+# pub mod http_util;
+#
+fn main() -> Result<()> {
+    let listener = TcpListener::bind("0.0.0.0:4000")?;
+    // (中略)
+#        let (mut stream, _) = listener.accept()?;
+#        let mut buf = [0u8; 512];
+#
+#        stream.read(&mut buf)?;
+#
+#        let buf = String::from_utf8_lossy(&buf);
+#
+#        let req = http_util::HttpRequest::from_str(&buf).ok_or(anyhow!("parse error"))?;
+#        println!("{} {}", req.method, req.path);
+
+    let mut res_header = HashMap::new();
+    res_header.insert("Content-Type", "text/html; charset=utf-8");
+    let res = http_util::HttpResponse::new(
+        req.version,
+        (200, "Ok"),
+        res_header,
+        String::from("<h1>hello world</h1>"),
+    );
+    stream.write_all(res.to_string().as_bytes())?;
+
+    stream.flush()?;
+    Ok(())
+}
+```
+
+...safari だとページがロードされない。実装が適当だから。
