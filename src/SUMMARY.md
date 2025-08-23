@@ -58,6 +58,7 @@
   - [mac の wine と、retina や d3d11 とかの話](./short-note/mac_wine/Readme.md)
   - [Tailscale を使ってみた](./short-note/tailscale/Readme.md)
   - [github で組織を形成する](./short-note/githubOrganizations/Readme.md)
+  - [リポジトリを作り直した件](./short-note/remake_repos/Readme.md)
 
 - [日記本](./book/Readme.md)
 
