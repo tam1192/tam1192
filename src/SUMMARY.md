@@ -22,6 +22,7 @@
     - [fabric 編 part1 仕様が大きく変わっちまったぜ](./mc/fabric/1/Readme.md)
     - [fabric 編 part2 とりまブロックを追加してみる](./mc/fabric/2/Readme.md)
   - [テクスチャ編 part1](./mc/tx1/Readme.md)
+  - [RenderScale はいいぞ](./mc/RenderScaleはいいぞ/Readme.md)
 
 - [サーバー系](./server-nikki/Readme.md)
 
