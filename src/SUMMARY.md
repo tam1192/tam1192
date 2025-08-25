@@ -44,6 +44,7 @@
   - [快活で作業してみた](./freewrite/kaikatu/Readme.md)
   - ["tam1192"repo のルール変えました](./freewrite/tam1192_repo_2508/Readme.md)
   - [究極の immutable を追え](./freewrite/究極のimmutableを追え/Readme.md)
+  - [新幹線で作業してみた](./freewrite/new_main_line/Readme.md)
 
 - [ひとくちメモ](./short-note/Readme.md)
 
