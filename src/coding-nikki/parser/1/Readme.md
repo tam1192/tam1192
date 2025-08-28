@@ -165,3 +165,171 @@ fn main() {
 ```
 
 関数を組み合わせて機能を強くする例です。~~ブック ⚪︎ フか。~~
+
+# パーサー
+
+こういうやつです。
+
+```rust
+fn digit_parser(i: &str) -> (&str, Option<i32>) {
+    let n = i.find(|c: char| !c.is_ascii_digit()).unwrap_or(0);
+    if let Ok(res) = i[0..n].parse::<i32>() {
+        (&i[n..], Some(res))
+    } else {
+        (&i, None)
+    }
+}
+
+fn main() {
+    let x = "123hello";
+    let (x, y) = digit_parser(x);
+    println!("{:?}, {:?}", x, y);
+}
+```
+
+文字列から数値だけ抽出します。 その後、数値と文字列を分割して出力します。  
+rust ではシャドーイングする設計にすると綺麗です。
+
+# パーサーコンビネーター
+
+```rust
+fn digit_parser(i: &str) -> (&str, Option<i32>) {
+    let n = i.find(|c: char| !c.is_ascii_digit()).unwrap_or(0);
+    if let Ok(res) = i[0..n].parse::<i32>() {
+        (&i[n..], Some(res))
+    } else {
+        (&i, None)
+    }
+}
+
+fn looparser<P, T>(parser: P) -> impl Fn(&str) -> (&str, Option<(&str, T)>)
+where P: Fn(&str) -> (&str, Option<T>)
+{
+    move |i| {
+        for n in 0..i.len() {
+            let (i2, res) = parser(&i[n..]);
+            if let Some(res) = res {
+                return (i2, Some((&i[..n], res)))
+            }
+        }
+        (i, None)
+    }
+}
+
+fn main() {
+    let x = "hello123world";
+    let (x, y) = looparser(digit_parser)(x);
+    println!("{:?}, {:?}", x, y);
+}
+```
+
+コードが急にカオスになりました。  
+詳しいことは次回に回して、**やりたいことだけ言います**。
+
+### looparser
+
+~~名付け適当~~ digit_parser は「**数文字が先頭から続く範囲で**数値を取り出します。」  
+つまり、途中の数値は取り出されません。
+
+```rust
+fn digit_parser(i: &str) -> (&str, Option<i32>) {
+    let n = i.find(|c: char| !c.is_ascii_digit()).unwrap_or(0);
+    if let Ok(res) = i[0..n].parse::<i32>() {
+        (&i[n..], Some(res))
+    } else {
+        (&i, None)
+    }
+}
+
+fn main() {
+    let x = "hello123";
+    let (x, y) = digit_parser(x);
+    println!("{:?}, {:?}", x, y);
+}
+```
+
+数値が後ろになるだけでパースできなくなりました。
+looparser では、**パーサーが成功するまで文字列の先頭をずらしながら試行錯誤する**という物です。
+
+よって、"hello123world"では、6 文字目から digit_parser が成功し、数値に変換して返すということができるようになりましたとさ。
+
+## パーサーという関数を受け入れる関数
+
+looparser では、関数をあたかも**Parser というオブジェクトのように扱っています**。  
+こういった時にも関数ポインタは必要になるのですね。
+
+## コード解説
+
+```rust, ignore
+fn digit_parser(i: &str) -> (&str, Option<i32>) {
+    let n = i.find(|c: char| !c.is_ascii_digit()).unwrap_or(0);
+    if let Ok(res) = i[0..n].parse::<i32>() {
+        (&i[n..], Some(res))
+    } else {
+        (&i, None)
+    }
+}
+```
+
+i は文字列。 `str.find()`は、引数にコールバック関数を入れます。  
+ここでもコールバック関数がっ...
+
+コールバック関数の引数は char にしておきます。 そうすることで、find メソッドがコールバック関数に先頭から文字を一文字づつ入れて、試してくれます。  
+コールバック関数の戻り値は bool です。 true を返すと、成功(=条件に合う文字)と判定されます。
+
+つまり、find メソッドは先頭から一文字ずつ試していき、条件に会う文字を見つけたらその文字があるインデックスを返すというメソッドになります。
+
+### 戻り値
+
+戻り値は(&str, Option)という形をとってます。
+
+```rust, ignore
+let base = "123hello";
+let (base, res1) = parser1(base);
+let (base, res2) = if res1.is_none() {
+    parser2(base)
+} else {
+    (base, None)
+}
+```
+
+まぁこんな感じの書き方ができるよねってことで。
+
+## コード解説 2
+
+```rust, ignore
+fn looparser<P, T>(parser: P) -> impl Fn(&str) -> (&str, Option<(&str, T)>)
+where P: Fn(&str) -> (&str, Option<T>)
+{
+    move |i| {
+        for n in 0..i.len() {
+            let (i2, res) = parser(&i[n..]);
+            if let Some(res) = res {
+                return (i2, Some((&i[..n], res)))
+            }
+        }
+        (i, None)
+    }
+}
+```
+
+`move |i| {}` これも rust では関数の一つとなります。 クロージャという物です。  
+クロージャはある意味変数に近いです。 実行時に生成することができます。
+
+### クロージャのキャプチャ
+
+`move`というのは所有権関係の物です。  
+looparser のスコープには`parser`というこれまた関数オブジェクトが存在します。  
+この`parser`の所有権を、クロージャに移動することを認める一言になってます。
+
+クロージャ内部では、キャプチャした parser オブジェクトがそのまま使えます。
+つまり、**looparser でうけっとったコールバック関数を、クロージャ内部で使うことができる**ということになります。
+
+looparser は戻り値で関数ポインタを渡してきますが、**そのクロージャでも looparser が受け取ったコールバック関数が引き続き利用可能です**。
+
+# 今回のまとめ
+
+ポインタからコールバック関数、そしてパーサーコンビネーターまでとりあえず纏めてみました。  
+本題まで行けてないのが悲しい。
+
+#
