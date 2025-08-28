@@ -491,6 +491,8 @@ looparser は戻り値で関数ポインタを渡してきますが、**その�
 
 <details><summary>結果</summary>
 
+２敗
+
 🟦🟨🟦🟦🟦  
 🟦🟦🟦🟦🟦
 
