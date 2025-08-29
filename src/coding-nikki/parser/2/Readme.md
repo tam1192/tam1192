@@ -162,6 +162,80 @@ alpha0 は 0 以上のアルファベットキャラクターをパースする�
 
 `"abcd"`のように仮に全てパースに成功する場合でも、stream は続きがあると想定され、パースが失敗するまで(`;`などの文字にぶち当たるまで)はエラーを出力する。
 
+## コード例
+
+```rust,ignore
+#use chumsky::{
+#    IterParser, Parser,
+#    error::Simple,
+#    extra,
+#    prelude::{any, end, just},
+#};
+#
+mod nom_parser {
+    use nom::{
+        IResult, Parser,
+        character::complete::{alpha0, char},
+        sequence::pair,
+    };
+
+    pub fn parser(i: &str) -> IResult<&str, (char, &str)> {
+        pair(char(':'), alpha0).parse(i)
+    }
+}
+
+fn main() {
+    let base = ":helloworld";
+    let parser = just::<_, _, extra::Err<Simple<char>>>(':')
+        .then(any().repeated().collect::<String>())
+        .then(end());
+    let x = parser.parse(base);
+
+    let y = nom_parser::parser(base);
+
+    println!("{:?}", x);
+    println!("{:?}", y);
+}
+```
+
+```
+ParseResult { output: Some(((':', "helloworld"), ())), errs: [] }
+Ok(("", (':', "helloworld")))
+```
+
+下が nom によるパース結果です。 Result は nom の方がシンプルにできてるように見えます。  
+**char はそのままだと型予測ができないので、何かしらの方法で型注釈をしないと使えなかったです。**
+
+pair でまとめましたが、この場合はこう書いた方が自然らしい。
+
+```rust, ignore
+let (i, r1) = char(':')(i)?;
+let (i, r2) = alpha0(i)?;
+Ok(i, (r1, r2))
+```
+
+## 参考サイト
+
+[Rust: nom によるパーサー実装](https://hazm.at/mox/lang/rust/nom/index.html)が相当丁寧にまとまっていてわかりやすいです。
+
+## nom はバイナリ向きか
+
+byte モジュールにバイトデータを扱うための関数があります。  
+nom は**多種多様な用途で使用可能**な構造に見えました。  
+しかし、文字列系の関数については chumsky の方が簡単に使える気がします。
+
+# まとめ
+
+chumsky についてもっと深めたい。  
+nom は多機能なのと、バイナリに向いている気がします。
+
+## ところでバイナリ解析とは
+
+バイナリも文字列同様、二進数列です。  
+文字解析の場合は記号や文字の並び順で解析し、それに従ってオブジェクトを作ります。  
+バイナリの場合はプロトコルや規格でどこに何があるか、1bit 単位で位置が決まってることがほとんどなので、  
+それに従って使いやすいオブジェクトに変換していきます。
+
 # 本日の二言
 
 <iframe width="312" height="176" src="https://ext.nicovideo.jp/thumb/nm5058953" scrolling="no" style="border:solid 1px #ccc;" frameborder="0"><a href="https://www.nicovideo.jp/watch/nm5058953">【重音テト】はじめてのチュウ【UTAU】コロテト</a></iframe>
