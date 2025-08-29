@@ -161,3 +161,17 @@ repeated メソッドを使うことによって、パーサーを繰り返し�
 alpha0 は 0 以上のアルファベットキャラクターをパースする。正規表現で言う`[a-zA-Z]*`である。
 
 `"abcd"`のように仮に全てパースに成功する場合でも、stream は続きがあると想定され、パースが失敗するまで(`;`などの文字にぶち当たるまで)はエラーを出力する。
+
+# 本日の二言
+
+<iframe width="312" height="176" src="https://ext.nicovideo.jp/thumb/nm5058953" scrolling="no" style="border:solid 1px #ccc;" frameborder="0"><a href="https://www.nicovideo.jp/watch/nm5058953">【重音テト】はじめてのチュウ【UTAU】コロテト</a></iframe>
+
+いやぁまじで~~草~~可愛い。
+
+<iframe width="312" height="176" src="https://ext.nicovideo.jp/thumb/sm42595400" scrolling="no" style="border:solid 1px #ccc;" frameborder="0"><a href="https://www.nicovideo.jp/watch/sm42595400">ちっちゃな私／重音テトSV</a></iframe>
+
+ちっちゃな私聞いてて思わずタグ検索「[はじめてのチュウ 重音テト](https://www.nicovideo.jp/tag/%E3%81%AF%E3%81%98%E3%82%81%E3%81%A6%E3%81%AE%E3%83%81%E3%83%A5%E3%82%A6%20%E9%87%8D%E9%9F%B3%E3%83%86%E3%83%88)」してしまった。
+
+<iframe width="312" height="176" src="https://ext.nicovideo.jp/thumb/sm45316610" scrolling="no" style="border:solid 1px #ccc;" frameborder="0"><a href="https://www.nicovideo.jp/watch/sm45316610">マジック・メイド / feat.重音テトSV</a></iframe>
+
+MIMI さんの PV 好きすぎて。
