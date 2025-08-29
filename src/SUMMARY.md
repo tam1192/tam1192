@@ -63,6 +63,7 @@
   - [Tailscale を使ってみた](./short-note/tailscale/Readme.md)
   - [github で組織を形成する](./short-note/githubOrganizations/Readme.md)
   - [リポジトリを作り直した件](./short-note/remake_repos/Readme.md)
+  - [いわゆる木構造というやつ](./short-note/tree/Readme.md)
 
 - [日記本](./book/Readme.md)
 
