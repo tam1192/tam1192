@@ -32,10 +32,6 @@ chumsky というパーサークレートも存在する。
 
 どれも文字列やバイナリ列などのコードを解釈し、オブジェクトやトークンに直すもの、そう理解してる。
 
-# AST
-
-木構造とかいう奴らの一つ。
-
 # Logos を使ってみる
 
 ```rust, ignore
@@ -78,4 +74,90 @@ Ok(Add), 2..3
 Ok(Number), 4..5
 ```
 
-おおよそどこに何があるか、教えてくれる。
+## example の json を動かしてみる
+
+[コードはこれ](https://github.com/maciejhirsz/logos/blob/master/examples/json.rs)
+git clone で持ってきた方が楽。
+
+`cargo run --example json -- <filename>.json`
+で動かせる。
+
+```json
+{
+  "name": "yjsnpi",
+  "age": 24
+}
+```
+
+```
+Object(
+    {
+        "\"name\"": String(
+            "\"yjsnpi\"",
+        ),
+        "\"age\"": Number(
+            24.0,
+        ),
+    },
+)
+```
+
+## 感想(2025/08/29 時点)
+
+ほぼ私が想像するパーサー？  
+言語はもちろん、json みたいな独自のデータ記述言語を扱う時には Logos を使った方が手っ取り早いかもしれない。
+
+# chumsky を使ってみる
+
+```rust,ignore
+use chumsky::{
+    Parser,
+    error::Simple,
+    extra,
+    prelude::{any, end, just},
+};
+
+fn main() {
+    let base = ":helloworld";
+    let parser = just::<_, _, extra::Err<Simple<char>>>(':')
+        .then(any().repeated())
+        .then(end());
+    let x = parser.parse(base);
+
+    println!("{:?}", x);
+}
+```
+
+parse というメソッドを使うことでパースされます。  
+them メソッドでパーサーを連結させることができます。
+
+## ドキュメント
+
+[ガイド](https://docs.rs/chumsky/latest/chumsky/guide/_00_getting_started/index.html)
+をベースに軽く触れてみました。
+
+## repeated について
+
+repeated メソッドを使うことによって、パーサーを繰り返し実行することができるようです。any パーサーは終端文字以外の全てにマッチするようなので、**マッチする間は繰り返されます**。
+
+ところでこれ、イテレーターに近い動作をします。
+
+## IterParser
+
+[IterParser](https://docs.rs/chumsky/latest/chumsky/trait.IterParser.html) repeated メソッドをつけると、実装されたパーサーになります。  
+と言いつつ、使えるのは fold および collect のようです。 map や filter は**repeated の手前で**行うらしい。
+
+## 感想(2025/08/29 時点)
+
+まだ正気よくわかってない。
+
+# nom
+
+だいぶ前から使ってきた。
+
+## stream vs complete
+
+最初のページに書かれている通り、**一部のパーサーで動作が変わってくる。**  
+alpha0 は 0 以上のアルファベットキャラクターをパースする。正規表現で言う`[a-zA-Z]*`である。
+
+`"abcd"`のように仮に全てパースに成功する場合でも、stream は続きがあると想定され、パースが失敗するまで(`;`などの文字にぶち当たるまで)はエラーを出力する。
