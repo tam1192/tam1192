@@ -49,6 +49,7 @@
   - [究極の immutable を追え](./freewrite/究極のimmutableを追え/Readme.md)
   - [新幹線で作業してみた](./freewrite/new_main_line/Readme.md)
   - [関越道の工事が多くて草](./freewrite/kanetu/Readme.md)
+  - [練ればねれほど疲れる](./freewrite/long_sleep/Readme.md)
 
 - [ひとくちメモ](./short-note/Readme.md)
 
