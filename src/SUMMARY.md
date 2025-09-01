@@ -1,6 +1,7 @@
 # Summary
 
 - [プロフィール](./profile.md)
+- [ブックマーク](./links.md)
 
 - [コーディング日記](./coding-nikki/Readme.md)
 
