@@ -67,6 +67,7 @@
   - [Tailscale を使ってみた](./short-note/tailscale/Readme.md)
   - [github で組織を形成する](./short-note/githubOrganizations/Readme.md)
   - [リポジトリを作り直した件](./short-note/remake_repos/Readme.md)
+  - [wipコミットをしてみた](./short-note/wipコミットをしてみた/Readme.md)
 
 - [日記本](./book/Readme.md)
 
