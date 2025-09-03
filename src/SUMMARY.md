@@ -68,6 +68,7 @@
   - [github で組織を形成する](./short-note/githubOrganizations/Readme.md)
   - [リポジトリを作り直した件](./short-note/remake_repos/Readme.md)
   - [wipコミットをしてみた](./short-note/wipコミットをしてみた/Readme.md)
+  - [zsh使いやすくした 1回目](./short-note/zsh使いやすくした/1/Readme.md)
 
 - [日記本](./book/Readme.md)
 
