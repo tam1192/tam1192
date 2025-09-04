@@ -3,6 +3,10 @@
 - [プロフィール](./profile.md)
 - [ブックマーク](./links.md)
 
+- [qiita でアップしました！](./up_the_qiita/Readme.md)
+
+  - [今更 type-c デビューしてみた](./up_the_qiita/type_c/Readme.md)
+
 - [コーディング日記](./coding-nikki/Readme.md)
 
   - [MyParserProject](./coding-nikki/my_parser_project/Readme.md)
@@ -67,8 +71,8 @@
   - [Tailscale を使ってみた](./short-note/tailscale/Readme.md)
   - [github で組織を形成する](./short-note/githubOrganizations/Readme.md)
   - [リポジトリを作り直した件](./short-note/remake_repos/Readme.md)
-  - [wipコミットをしてみた](./short-note/wipコミットをしてみた/Readme.md)
-  - [zsh使いやすくした 1回目](./short-note/zsh使いやすくした/1/Readme.md)
+  - [wip コミットをしてみた](./short-note/wipコミットをしてみた/Readme.md)
+  - [zsh 使いやすくした 1 回目](./short-note/zsh使いやすくした/1/Readme.md)
 
 - [日記本](./book/Readme.md)
 
