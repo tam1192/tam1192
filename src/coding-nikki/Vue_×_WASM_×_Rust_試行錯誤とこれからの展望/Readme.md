@@ -1,5 +1,47 @@
 # Vue × WASM × Rust—試行錯誤とこれからの展望
 
+初版投稿日: 2025/06/10 (コミット履歴より)
+更新日: 2025/09/05
+
+元々 AI 一緒に書いた記事ですが、少し改めます。
+
+# 本日のふたこと
+
+(2025/09/05 のひとことになります)
+
+[すでに別記事をあげてるので](../../up_the_qiita/ライフタイムを意識してコードを書く.rs)二言目になります。
+
+<iframe width="312" height="176" src="https://ext.nicovideo.jp/thumb/sm45164050" scrolling="no" style="border:solid 1px #ccc;" frameborder="0"><a href="https://www.nicovideo.jp/watch/sm45164050">ど～ぱみん -「ハロー、フェルミ。」feat.初音ミク</a></iframe>
+
+最近ずっと聴いてる
+
+# とりあえず
+
+- [動作例](https://tam1192.github.io/experiments-wasm-vue/)
+
+このサイトは、rust(nom)で書かれた四則演算パーサーを wasm で載せ、それを実際に動かしているものです。
+nom などについては[当サイトのパーサー記事](../parser/2)が参考になるかと。
+
+# wasm の注目度
+
+私が思っていたより、wasm はすごいものでした。
+[Linux コンテナの「次」としての WebAssembly、の解説](https://zenn.dev/koduki/articles/9f86d03cd703c4)
+
+**なんとコンテナの「次」なんですね！**  
+これは驚いた。あんま深く考えてなかったから、共存ぐらいにしか思ってなかった。
+
+# wasm と java の違い
+
+[kotlin という rust の次に好きな言語のおかげ](../../mc/fabric/1)で、java の抵抗も減ってます。
+しかし、GC に抵抗ある人にとっては結構いい選択肢になると思います。  
+(~~あと java のバージョンかんりめんどくさい~~)
+
+# まとめ
+
+詳しいことかつ当時の背景については、AI と一緒に書いた旧記事の項目を開いてみてみてください。
+
+<details><summary>AIと一緒に描いた旧記事</summary>
+
 最近、Vue や Nuxt、Nuxt UI を触れていて、「色々作れそうだな」と思うことが増えてきました。  
 一方で、JS の型システムがガバガバすぎて、Rust が恋しくなってきました。
 そこで、**WASM の存在を思い出し、Rust の強みを活かせる仕組みを急遽作ることに**しました。
@@ -42,9 +84,22 @@ WASM の可能性を探る中で、「Web ブラウザ上で動く独自ラン�
 
 wasm はいいぞ
 
+</details>
+
 ## 参考など
 
 - [Vue ベースな Web ツールのロジック部分を Rust 製 Wasm で実装する: pirosuke 様](https://zenn.dev/pirosuke/articles/vue-with-wasm)  
   ディレクトリの構造等を参考にしました。
 - [Rust から WebAssembly にコンパイル/mdn](https://developer.mozilla.org/ja/docs/WebAssembly/Guides/Rust_to_Wasm)  
   いつも通りめっちゃわかりやすい
+
+## なんで更新したの
+
+リポジトリを綺麗にした記念です。
+orphan ブランチ作って cherry-pick しまくり、main ブランチを完全に作り直しました。
+**また、まだ動かないコミットは dev ブランチに移動し、動作するようにさせました!**
+
+当時の記事には**main コミットいじって動かなくなっちゃった！thpr**って書いてあって腹が立ったので描き直しました。
+~~当時の自分に切れる~~
+
+自分の敵は自分っちゅーことや
