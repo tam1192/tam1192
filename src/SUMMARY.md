@@ -6,6 +6,7 @@
 - [qiita でアップしました！](./up_the_qiita/Readme.md)
 
   - [今更 type-c デビューしてみた](./up_the_qiita/type_c/Readme.md)
+  - [ライフタイムを意識してコードを書く.rs](./up_the_qiita/ライフタイムを意識してコードを書く.rs/Readme.md)
 
 - [コーディング日記](./coding-nikki/Readme.md)
 
@@ -60,7 +61,6 @@
 - [ひとくちメモ](./short-note/Readme.md)
 
   - [rust で buffer を作る時は](./short-note/rustでbufferを作る時は/Readme.md)
-  - [ライフタイムを意識してコードを書く、その 1.rs](./short-note/ライフタイムを意識してコードを書く、その1.rs/Readme.md)
   - [mac のパッケージについて](./short-note/macのパッケージについて/Readme.md)
   - [(rust の)enum ってどうやって比較すんの](./short-note/enumってどうやって比較すんの/Readme.md)
   - [(rust の)from トレイトについて](./short-note/rustのfromトレイトについて/Readme.md)
