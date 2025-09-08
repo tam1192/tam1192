@@ -59,6 +59,7 @@
   - [最後の夏に毎日投稿してみた件](./freewrite/everyday_upload/Readme.md)
   - [リポジトリ整理に使う git 操作](./freewrite/リポジトリ整理に使うgit操作/Readme.md)
   - [山道を走った](./freewrite/山道/Readme.md)
+  - [なんかサーバーに繋がらないんだけど! -> 原因は...](./freewrite/not_running_server/Readme.md)
 
 - [ひとくちメモ](./short-note/Readme.md)
 
