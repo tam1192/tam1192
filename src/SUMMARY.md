@@ -94,4 +94,5 @@
     - [なぎちゃん強くしたら 400 位になったじゃんね ⭐︎](./games/bluearchive/nagituyo/Readme.md)
     - [チャレンジミッション全クリを目指して](./games/bluearchive/hard/Readme.md)
     - [4.5 周年](./games/bluearchive/45/Readme.md)
+    - [mika say "mikasei"](./games/bluearchive/mikasay/Readme.md)
   - [subnautica やってみた](./games/subnautica/Readme.md)
