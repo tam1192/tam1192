@@ -76,6 +76,7 @@
   - [リポジトリを作り直した件](./short-note/remake_repos/Readme.md)
   - [wip コミットをしてみた](./short-note/wipコミットをしてみた/Readme.md)
   - [zsh 使いやすくした 1 回目](./short-note/zsh使いやすくした/1/Readme.md)
+  - [pid1 に割り込む奴](./short-note/pid1interrupt/Readme.md)
 
 - [日記本](./book/Readme.md)
 
